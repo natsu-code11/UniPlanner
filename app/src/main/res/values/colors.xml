@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colori istituzionali Università Parthenope -->
+    <color name="parthenope_blue">#003087</color>   <!-- blu principale -->
+    <color name="parthenope_gold">#C9A84C</color>   <!-- oro accento -->
+    <color name="parthenope_blue_light">#1A4FAF</color> <!-- blu più chiaro per hover -->
+
+    <!-- Colori generali -->
+    <color name="white">#FFFFFF</color>
+    <color name="background">#F5F5F5</color>
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#666666</color>
 </resources>

@@ -1,9 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.UniPlanner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.UniPlanner" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/parthenope_blue</item>
+        <item name="colorPrimaryVariant">@color/parthenope_blue_light</item>
+        <item name="colorSecondary">@color/parthenope_gold</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
-
-    <style name="Theme.UniPlanner" parent="Base.Theme.UniPlanner" />
 </resources>

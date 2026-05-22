@@ -10,18 +10,22 @@
 
     <item
         android:id="@+id/nav_home"
-        android:title="Home" />
+        android:title="Home"
+        android:icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/nav_lezioni"
-        android:title="Lezioni" />
+        android:title="Lezioni"
+        android:icon="@drawable/ic_lezioni" />
 
     <item
         android:id="@+id/nav_esami"
-        android:title="Esami" />
+        android:title="Esami"
+        android:icon="@drawable/ic_esami" />
 
     <item
         android:id="@+id/nav_scadenze"
-        android:title="Scadenze" />
+        android:title="Scadenze"
+        android:icon="@drawable/ic_scadenze" />
 
 </menu>
