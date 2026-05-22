@@ -1,0 +1,156 @@
+<!-- ============================================================
+     FILE: activity_configurazione.xml
+     POSIZIONE: app/src/main/res/layout/
+     SCOPO: Layout della schermata di configurazione iniziale.
+            Mostrata solo al primo avvio dell'app.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts & UI)
+     ============================================================ -->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- header blu con nome app -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/parthenope_blue"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="-32dp"
+            android:layout_marginEnd="-32dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UniPlanner"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Organizza la tua università"
+                android:textColor="@color/parthenope_gold"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- titolo sezione -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benvenuto! 👋"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/parthenope_blue"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dimmi qualcosa di te per personalizzare la tua esperienza"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="24dp" />
+
+        <!-- campo nome -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il tuo nome"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Es. Mario Rossi"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp" />
+
+        <!-- corso di laurea -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Corso di laurea"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCorso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- anno di corso -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Anno di corso"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <Spinner
+            android:id="@+id/spinnerAnno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- semestre -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Semestre corrente"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <Spinner
+            android:id="@+id/spinnerSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="12dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- bottone inizia -->
+        <Button
+            android:id="@+id/btnInizia"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Inizia →"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+    </LinearLayout>
+</ScrollView>
