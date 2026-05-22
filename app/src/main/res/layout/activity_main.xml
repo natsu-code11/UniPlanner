@@ -17,31 +17,46 @@
     <!-- barra in alto con il nome dell'app -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:background="@color/parthenope_blue"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
-        <!-- nome app a sinistra -->
-        <TextView
+        <!-- nome app e sottotitolo a sinistra -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Uni Planner"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <!-- sottotitolo università a destra -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UniPlanner"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Organizza la tua università"
+                android:textColor="@color/parthenope_gold"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- parthenope a destra -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Parthenope"
-            android:textColor="@color/parthenope_gold"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:alpha="0.8" />
 
     </LinearLayout>
 
