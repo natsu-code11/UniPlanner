@@ -1,18 +1,19 @@
 // ============================================================
 // FILE: MainActivity.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/
-// SCOPO: Schermata principale dell'app. Gestisce la bottom
-//        navigation bar e carica il Fragment corretto quando
-//        l'utente tocca uno dei 4 tab in basso.
-// LEZIONE DI RIFERIMENTO: L09 (Activity Lifecycle), L12 (Fragments)
+// SCOPO: Schermata principale dell'app. Controlla se è il primo
+//        avvio e reindirizza alla configurazione se necessario.
+//        Gestisce la bottom navigation bar.
+// LEZIONE DI RIFERIMENTO: L09 (Activity), L12 (Fragments), L16 (SharedPreferences)
 // ============================================================
 
 package com.uniplanner.app
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.uniplanner.app.R
 import com.uniplanner.app.ui.esami.EsamiFragment
 import com.uniplanner.app.ui.home.HomeFragment
 import com.uniplanner.app.ui.lezioni.LezioniFragment
@@ -22,10 +23,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)  // collega il layout XML
+        setContentView(R.layout.activity_main)
 
-        // mostra HomeFragment all'avvio dell'app
-        if (savedInstanceState == null) {       // evita di ricaricare il Fragment se l'Activity viene ricreata (es. rotazione)
+        // controlla se è il primo avvio
+        val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
+        val primoAvvio = prefs.getBoolean("primo_avvio", true)
+
+        if (primoAvvio) {
+            // prima volta → vai alla configurazione
+            startActivity(Intent(this, ConfigurazioneActivity::class.java))
+            finish()
+            return
+        }
+
+        // mostra il nome dello studente nella toolbar
+        val nome = prefs.getString("nome", "") ?: ""
+        if (nome.isNotEmpty()) {
+            findViewById<TextView>(R.id.tvBenvenuto).text = "Ciao, $nome! 👋"
+        }
+
+        // mostra HomeFragment all'avvio
+        if (savedInstanceState == null) {
             mostraFragment(HomeFragment())
         }
 
@@ -33,19 +51,18 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home     -> mostraFragment(HomeFragment())      // tab Home
-                R.id.nav_lezioni  -> mostraFragment(LezioniFragment())   // tab Lezioni
-                R.id.nav_esami    -> mostraFragment(EsamiFragment())     // tab Esami
-                R.id.nav_scadenze -> mostraFragment(ScadenzeFragment())  // tab Scadenze
+                R.id.nav_home     -> mostraFragment(HomeFragment())
+                R.id.nav_lezioni  -> mostraFragment(LezioniFragment())
+                R.id.nav_esami    -> mostraFragment(EsamiFragment())
+                R.id.nav_scadenze -> mostraFragment(ScadenzeFragment())
             }
-            true  // restituisce true per indicare che il click è stato gestito
+            true
         }
     }
 
-    // funzione che sostituisce il Fragment visibile nel contenitore
     private fun mostraFragment(fragment: androidx.fragment.app.Fragment) {
-        supportFragmentManager.beginTransaction()   // inizia una transazione
-            .replace(R.id.fragmentContainer, fragment)  // sostituisce il Fragment nel contenitore
-            .commit()                               // applica la transazione
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 }
