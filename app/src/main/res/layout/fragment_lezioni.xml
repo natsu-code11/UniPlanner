@@ -1,0 +1,24 @@
+<!-- ============================================================
+     FILE: fragment_lezioni.xml
+     POSIZIONE: app/src/main/res/layout/
+     SCOPO: Layout della schermata Lezioni. Contiene la lista
+            delle lezioni del giorno selezionato.
+            Verrà completato dalla Persona 1.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts & UI), L13 (RecyclerView)
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lezioni"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<!-- ============================================================
+     FILE: bottom_nav_menu.xml
+     POSIZIONE: app/src/main/res/menu/
+     SCOPO: Definisce le 4 voci della barra di navigazione in basso.
+            Ogni voce corrisponde a un Fragment diverso.
+     LEZIONE DI RIFERIMENTO: L12 (Fragments & Navigation)
+     ============================================================ -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_lezioni"
+        android:title="Lezioni" />
+
+    <item
+        android:id="@+id/nav_esami"
+        android:title="Esami" />
+
+    <item
+        android:id="@+id/nav_scadenze"
+        android:title="Scadenze" />
+
+</menu>
