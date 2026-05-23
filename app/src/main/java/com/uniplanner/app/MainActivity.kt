@@ -13,7 +13,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uniplanner.app.ui.esami.EsamiFragment
 import com.uniplanner.app.ui.home.HomeFragment
 import com.uniplanner.app.ui.lezioni.LezioniFragment
@@ -47,20 +46,9 @@ class MainActivity : AppCompatActivity() {
             mostraFragment(HomeFragment())
         }
 
-        // collega la bottom navigation ai Fragment
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home     -> mostraFragment(HomeFragment())
-                R.id.nav_lezioni  -> mostraFragment(LezioniFragment())
-                R.id.nav_esami    -> mostraFragment(EsamiFragment())
-                R.id.nav_scadenze -> mostraFragment(ScadenzeFragment())
-            }
-            true
-        }
     }
 
-    private fun mostraFragment(fragment: androidx.fragment.app.Fragment) {
+    fun mostraFragment(fragment: androidx.fragment.app.Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()

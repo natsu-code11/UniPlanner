@@ -5,20 +5,14 @@
     android:orientation="vertical"
     android:background="@color/background"
     android:gravity="center"
-    android:padding="32dp">
+    android:padding="24dp">
 
     <TextView
+        android:id="@+id/tvSaluto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="👋"
-        android:textSize="48sp"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bentornato!"
-        android:textSize="26sp"
+        android:text="Bentornato! 👋"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/parthenope_blue"
         android:gravity="center"
@@ -27,10 +21,53 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Organizza lezioni, esami e scadenze\nin un unico posto"
-        android:textSize="15sp"
+        android:text="Cosa vuoi gestire oggi?"
+        android:textSize="14sp"
         android:textColor="@color/text_secondary"
         android:gravity="center"
-        android:lineSpacingExtra="4dp" />
+        android:layout_marginBottom="40dp" />
+
+    <Button
+        android:id="@+id/btnLezioni"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="📚  Lezioni"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue" />
+
+    <Button
+        android:id="@+id/btnEsami"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="📝  Esami"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue" />
+
+    <Button
+        android:id="@+id/btnScadenze"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="⏰  Scadenze"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue" />
+
+    <Button
+        android:id="@+id/btnRipristina"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="🔄  Ripristina dati"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#CC0000"
+        android:backgroundTint="#FFEEEE" />
 
 </LinearLayout>
