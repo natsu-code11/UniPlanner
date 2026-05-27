@@ -55,6 +55,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
             etVotoEsame.setText(intent.getIntExtra("ESAME_VOTO", 0).toString())
 
             val stato = intent.getStringExtra("ESAME_STATO") ?: "da sostenere"
+
             if (stato == "superato") {
                 rbSuperato.isChecked = true
             } else {
@@ -68,7 +69,6 @@ class AggiungiEsameActivity : AppCompatActivity() {
         }
 
         btnSalvaEsame.setOnClickListener {
-            Toast.makeText(this, "Click su Salva", Toast.LENGTH_SHORT).show()
             salvaEsame()
         }
 
@@ -94,6 +94,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
         }
 
         val cfu = cfuString.toIntOrNull()
+
         if (cfu == null || cfu <= 0) {
             etCfuEsame.error = "CFU non validi"
             return
@@ -101,10 +102,33 @@ class AggiungiEsameActivity : AppCompatActivity() {
 
         val voto = votoString.toIntOrNull() ?: 0
 
+        if (voto < 0 || voto > 30) {
+            etVotoEsame.error = "Il voto deve essere tra 0 e 30"
+            return
+        }
+
         val stato = if (rbSuperato.isChecked) {
             "superato"
         } else {
             "da sostenere"
+        }
+
+        if (stato == "da sostenere" && voto >= 18) {
+            Toast.makeText(
+                this,
+                "Un esame con voto almeno 18 deve essere segnato come superato",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        if (stato == "superato" && voto < 18) {
+            Toast.makeText(
+                this,
+                "Un esame superato deve avere un voto almeno pari a 18",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
         }
 
         val esame = Esame(
@@ -127,7 +151,12 @@ class AggiungiEsameActivity : AppCompatActivity() {
                 }
             }
 
-            Toast.makeText(this@AggiungiEsameActivity, "Esame salvato", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@AggiungiEsameActivity,
+                "Esame salvato",
+                Toast.LENGTH_SHORT
+            ).show()
+
             finish()
         }
     }
@@ -165,7 +194,12 @@ class AggiungiEsameActivity : AppCompatActivity() {
                 db.esameDao().elimina(esame)
             }
 
-            Toast.makeText(this@AggiungiEsameActivity, "Esame eliminato", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@AggiungiEsameActivity,
+                "Esame eliminato",
+                Toast.LENGTH_SHORT
+            ).show()
+
             finish()
         }
     }
