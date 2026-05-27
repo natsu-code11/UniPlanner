@@ -25,15 +25,19 @@ class ConfigurazioneActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurazione)
 
-        // collegamento ai widget del layout
-        val etNome     = findViewById<EditText>(R.id.etNome)
-        val spinnerCorso     = findViewById<Spinner>(R.id.spinnerCorso)
-        val spinnerAnno      = findViewById<Spinner>(R.id.spinnerAnno)
-        val spinnerSemestre  = findViewById<Spinner>(R.id.spinnerSemestre)
-        val btnInizia        = findViewById<Button>(R.id.btnInizia)
+        val etNome = findViewById<EditText>(R.id.etNome)
+        val spinnerCorso = findViewById<Spinner>(R.id.spinnerCorso)
+        val spinnerAnno = findViewById<Spinner>(R.id.spinnerAnno)
+        val spinnerSemestre = findViewById<Spinner>(R.id.spinnerSemestre)
+        val btnInizia = findViewById<Button>(R.id.btnInizia)
 
-        // popolamento Spinner corso di laurea
+        etNome.setTextColor(getColor(android.R.color.black))
+        etNome.setHintTextColor(getColor(android.R.color.darker_gray))
+        etNome.setBackgroundColor(getColor(android.R.color.white))
+
+        // Primo elemento vuoto: così la tendina parte senza valore selezionato
         val corsi = listOf(
+            "",
             "Informatica",
             "Economia",
             "Ingegneria",
@@ -42,39 +46,80 @@ class ConfigurazioneActivity : AppCompatActivity() {
             "Scienze Motorie",
             "Altro"
         )
-        spinnerCorso.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, corsi)
 
-        // popolamento Spinner anno di corso
-        val anni = listOf("1° Anno", "2° Anno", "3° Anno", "4° Anno", "5° Anno")
-        spinnerAnno.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, anni)
+        val adapterCorso = ArrayAdapter(
+            this,
+            R.layout.item_spinner,
+            corsi
+        )
+        adapterCorso.setDropDownViewResource(R.layout.item_spinner_dropdown)
+        spinnerCorso.adapter = adapterCorso
 
-        // popolamento Spinner semestre
-        val semestri = listOf("Primo Semestre", "Secondo Semestre")
-        spinnerSemestre.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, semestri)
+        val anni = listOf(
+            "",
+            "1° Anno",
+            "2° Anno",
+            "3° Anno",
+            "4° Anno",
+            "5° Anno"
+        )
 
-        // click sul bottone Inizia
+        val adapterAnno = ArrayAdapter(
+            this,
+            R.layout.item_spinner,
+            anni
+        )
+        adapterAnno.setDropDownViewResource(R.layout.item_spinner_dropdown)
+        spinnerAnno.adapter = adapterAnno
+
+        val semestri = listOf(
+            "",
+            "Primo Semestre",
+            "Secondo Semestre"
+        )
+
+        val adapterSemestre = ArrayAdapter(
+            this,
+            R.layout.item_spinner,
+            semestri
+        )
+        adapterSemestre.setDropDownViewResource(R.layout.item_spinner_dropdown)
+        spinnerSemestre.adapter = adapterSemestre
+
         btnInizia.setOnClickListener {
             val nome = etNome.text.toString().trim()
 
-            // controllo che il nome non sia vuoto
             if (nome.isEmpty()) {
                 Toast.makeText(this, "Inserisci il tuo nome!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // salvataggio in SharedPreferences
+            if (spinnerCorso.selectedItemPosition == 0) {
+                Toast.makeText(this, "Seleziona il corso di laurea", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (spinnerAnno.selectedItemPosition == 0) {
+                Toast.makeText(this, "Seleziona l'anno di corso", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (spinnerSemestre.selectedItemPosition == 0) {
+                Toast.makeText(this, "Seleziona il semestre", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
             prefs.edit()
-                .putBoolean("primo_avvio", false)   // non mostrare più questa schermata
-                .putString("nome", nome)             // nome dello studente
+                .putBoolean("primo_avvio", false)
+                .putString("nome", nome)
                 .putString("corso", spinnerCorso.selectedItem.toString())
                 .putString("anno", spinnerAnno.selectedItem.toString())
                 .putString("semestre", spinnerSemestre.selectedItem.toString())
                 .apply()
 
-            // vai alla MainActivity
             startActivity(Intent(this, MainActivity::class.java))
-            finish()  // chiude questa Activity così non si torna indietro
+            finish()
         }
     }
 }

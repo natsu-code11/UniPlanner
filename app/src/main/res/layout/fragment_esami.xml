@@ -9,6 +9,7 @@
      LEZIONE DI RIFERIMENTO: L10 (Layouts & UI), L13 (RecyclerView)
      ============================================================ -->
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,6 +43,15 @@
         android:text="+ Aggiungi esame"
         android:textColor="@android:color/white"
         android:backgroundTint="@android:color/holo_blue_dark" />
+
+    <Button
+        android:id="@+id/btnTornaHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Torna alla schermata principale"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:layout_marginTop="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEsami"

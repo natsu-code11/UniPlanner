@@ -36,4 +36,7 @@ interface EsameDao {
 
     @Query("SELECT * FROM esami WHERE stato = 'da sostenere' ORDER BY data ASC LIMIT 1")  // prossimo esame da sostenere (per la Home)
     suspend fun getProssimo(): Esame?
+
+    @Query("SELECT * FROM esami WHERE corso = :corso AND anno = :anno AND semestre = :semestre ORDER BY data ASC")
+    suspend fun getPerProfilo(corso: String, anno: String, semestre: String): List<Esame>
 }

@@ -1,14 +1,17 @@
 package com.uniplanner.app.ui.esami
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.uniplanner.app.MainActivity
 import com.uniplanner.app.R
 import com.uniplanner.app.data.AppDatabase
 import com.uniplanner.app.data.Esame
@@ -22,6 +25,7 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
     private lateinit var tvMedia: TextView
     private lateinit var recyclerViewEsami: RecyclerView
     private lateinit var btnAggiungiEsame: Button
+    private lateinit var btnTornaHome: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +33,7 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
         tvMedia = view.findViewById(R.id.tvMedia)
         recyclerViewEsami = view.findViewById(R.id.recyclerViewEsami)
         btnAggiungiEsame = view.findViewById(R.id.btnAggiungiEsame)
+        btnTornaHome = view.findViewById(R.id.btnTornaHome)
 
         adapter = EsamiAdapter { esame ->
             val intent = Intent(requireContext(), AggiungiEsameActivity::class.java)
@@ -51,6 +56,14 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
             startActivity(intent)
         }
 
+        btnTornaHome.setOnClickListener {
+            Toast.makeText(requireContext(), "Torno alla Home", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
         caricaEsami()
     }
 
@@ -66,8 +79,17 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
         lifecycleScope.launch {
             val db = AppDatabase.getInstance(requireContext())
 
+            val prefs = requireContext().getSharedPreferences(
+                "uniplanner_prefs",
+                Context.MODE_PRIVATE
+            )
+
+            val corso = prefs.getString("corso", "") ?: ""
+            val anno = prefs.getString("anno", "") ?: ""
+            val semestre = prefs.getString("semestre", "") ?: ""
+
             val esami = withContext(Dispatchers.IO) {
-                db.esameDao().getTutti()
+                db.esameDao().getPerProfilo(corso, anno, semestre)
             }
 
             adapter.submitList(esami)

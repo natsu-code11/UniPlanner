@@ -130,6 +130,11 @@ class AggiungiEsameActivity : AppCompatActivity() {
             ).show()
             return
         }
+        val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
+
+        val corso = prefs.getString("corso", "") ?: ""
+        val anno = prefs.getString("anno", "") ?: ""
+        val semestre = prefs.getString("semestre", "") ?: ""
 
         val esame = Esame(
             id = if (esameId == -1) 0 else esameId,
@@ -137,7 +142,10 @@ class AggiungiEsameActivity : AppCompatActivity() {
             data = data,
             cfu = cfu,
             voto = voto,
-            stato = stato
+            stato = stato,
+            corso = corso,
+            anno = anno,
+            semestre = semestre
         )
 
         lifecycleScope.launch {
@@ -177,14 +185,22 @@ class AggiungiEsameActivity : AppCompatActivity() {
         } else {
             "da sostenere"
         }
+        val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
+
+        val corso = prefs.getString("corso", "") ?: ""
+        val anno = prefs.getString("anno", "") ?: ""
+        val semestre = prefs.getString("semestre", "") ?: ""
 
         val esame = Esame(
-            id = esameId,
+            id = if (esameId == -1) 0 else esameId,
             nome = nome,
             data = data,
             cfu = cfu,
             voto = voto,
-            stato = stato
+            stato = stato,
+            corso = corso,
+            anno = anno,
+            semestre = semestre
         )
 
         lifecycleScope.launch {
