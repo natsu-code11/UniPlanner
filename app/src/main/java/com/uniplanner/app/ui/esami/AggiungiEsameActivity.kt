@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.uniplanner.app.R
@@ -43,34 +44,17 @@ class AggiungiEsameActivity : AppCompatActivity() {
         btnSalvaEsame = findViewById(R.id.btnSalvaEsame)
         btnEliminaEsame = findViewById(R.id.btnEliminaEsame)
 
-        leggiDatiIntent()
-
-        btnSalvaEsame.setOnClickListener {
-            salvaEsame()
-        }
-
-        btnEliminaEsame.setOnClickListener {
-            eliminaEsame()
-        }
-    }
-
-    private fun leggiDatiIntent() {
         esameId = intent.getIntExtra("ESAME_ID", -1)
 
         if (esameId != -1) {
             tvTitoloFormEsame.text = "Modifica esame"
 
-            val nome = intent.getStringExtra("ESAME_NOME") ?: ""
-            val data = intent.getStringExtra("ESAME_DATA") ?: ""
-            val cfu = intent.getIntExtra("ESAME_CFU", 0)
-            val voto = intent.getIntExtra("ESAME_VOTO", 0)
+            etNomeEsame.setText(intent.getStringExtra("ESAME_NOME") ?: "")
+            etDataEsame.setText(intent.getStringExtra("ESAME_DATA") ?: "")
+            etCfuEsame.setText(intent.getIntExtra("ESAME_CFU", 0).toString())
+            etVotoEsame.setText(intent.getIntExtra("ESAME_VOTO", 0).toString())
+
             val stato = intent.getStringExtra("ESAME_STATO") ?: "da sostenere"
-
-            etNomeEsame.setText(nome)
-            etDataEsame.setText(data)
-            etCfuEsame.setText(cfu.toString())
-            etVotoEsame.setText(voto.toString())
-
             if (stato == "superato") {
                 rbSuperato.isChecked = true
             } else {
@@ -82,36 +66,40 @@ class AggiungiEsameActivity : AppCompatActivity() {
             tvTitoloFormEsame.text = "Aggiungi esame"
             btnEliminaEsame.visibility = View.GONE
         }
+
+        btnSalvaEsame.setOnClickListener {
+            Toast.makeText(this, "Click su Salva", Toast.LENGTH_SHORT).show()
+            salvaEsame()
+        }
+
+        btnEliminaEsame.setOnClickListener {
+            eliminaEsame()
+        }
     }
 
     private fun salvaEsame() {
         val nome = etNomeEsame.text.toString().trim()
         val data = etDataEsame.text.toString().trim()
-        val cfuTesto = etCfuEsame.text.toString().trim()
-        val votoTesto = etVotoEsame.text.toString().trim()
+        val cfuString = etCfuEsame.text.toString().trim()
+        val votoString = etVotoEsame.text.toString().trim()
 
         if (nome.isEmpty()) {
-            etNomeEsame.error = "Il nome è obbligatorio"
+            etNomeEsame.error = "Inserisci il nome"
             return
         }
 
         if (data.isEmpty()) {
-            etDataEsame.error = "La data è obbligatoria"
+            etDataEsame.error = "Inserisci la data"
             return
         }
 
-        val cfu = cfuTesto.toIntOrNull()
+        val cfu = cfuString.toIntOrNull()
         if (cfu == null || cfu <= 0) {
-            etCfuEsame.error = "Inserisci CFU validi"
+            etCfuEsame.error = "CFU non validi"
             return
         }
 
-        val voto = votoTesto.toIntOrNull() ?: 0
-
-        if (voto < 0 || voto > 30) {
-            etVotoEsame.error = "Il voto deve essere tra 0 e 30"
-            return
-        }
+        val voto = votoString.toIntOrNull() ?: 0
 
         val stato = if (rbSuperato.isChecked) {
             "superato"
@@ -120,7 +108,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
         }
 
         val esame = Esame(
-            id = if (esameId != -1) esameId else 0,
+            id = if (esameId == -1) 0 else esameId,
             nome = nome,
             data = data,
             cfu = cfu,
@@ -132,13 +120,14 @@ class AggiungiEsameActivity : AppCompatActivity() {
             val db = AppDatabase.getInstance(this@AggiungiEsameActivity)
 
             withContext(Dispatchers.IO) {
-                if (esameId != -1) {
-                    db.esameDao().aggiorna(esame)
-                } else {
+                if (esameId == -1) {
                     db.esameDao().inserisci(esame)
+                } else {
+                    db.esameDao().aggiorna(esame)
                 }
             }
 
+            Toast.makeText(this@AggiungiEsameActivity, "Esame salvato", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -176,6 +165,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
                 db.esameDao().elimina(esame)
             }
 
+            Toast.makeText(this@AggiungiEsameActivity, "Esame eliminato", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
