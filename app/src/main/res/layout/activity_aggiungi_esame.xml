@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    FILE: activity_aggiungi_esame.xml
+    SCOPO: schermata per aggiungere, modificare o eliminare un esame.
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTitoloFormEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aggiungi esame"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etNomeEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Nome esame"
+            android:inputType="text"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etDataEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Data appello, es. 2026-06-20"
+            android:inputType="text"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/etCfuEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="CFU"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/etVotoEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="Voto, lascia 0 se non sostenuto"
+            android:inputType="number"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvStatoLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stato esame"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <RadioGroup
+            android:id="@+id/rgStatoEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rbDaSostenere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Da sostenere"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/rbSuperato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Superato" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnSalvaEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salva"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnEliminaEsame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Elimina"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>

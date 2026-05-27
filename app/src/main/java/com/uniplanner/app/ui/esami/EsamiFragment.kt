@@ -1,23 +1,104 @@
-// ============================================================
-// FILE: EsamiFragment.kt
-// POSIZIONE: app/src/main/java/com/uniplanner/app/ui/esami/
-// SCOPO: Schermata che mostra la lista degli esami divisi in
-//        "da sostenere" e "superati". Mostra la media voti in cima.
-//        Questa sezione verrà completata dalla Persona 2.
-// LEZIONE DI RIFERIMENTO: L12 (Fragments), L13 (RecyclerView), L15 (Room)
-// ============================================================
-
 package com.uniplanner.app.ui.esami
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.uniplanner.app.R
+import com.uniplanner.app.data.AppDatabase
+import com.uniplanner.app.data.Esame
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class EsamiFragment : Fragment(R.layout.fragment_esami) {  // collega questo Fragment al suo layout XML
+class EsamiFragment : Fragment(R.layout.fragment_esami) {
+
+    private lateinit var adapter: EsamiAdapter
+    private lateinit var tvMedia: TextView
+    private lateinit var recyclerViewEsami: RecyclerView
+    private lateinit var btnAggiungiEsame: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // il codice verrà completato dalla Persona 2
+
+        tvMedia = view.findViewById(R.id.tvMedia)
+        recyclerViewEsami = view.findViewById(R.id.recyclerViewEsami)
+        btnAggiungiEsame = view.findViewById(R.id.btnAggiungiEsame)
+
+        adapter = EsamiAdapter { esame ->
+            val intent = Intent(requireContext(), AggiungiEsameActivity::class.java)
+
+            intent.putExtra("ESAME_ID", esame.id)
+            intent.putExtra("ESAME_NOME", esame.nome)
+            intent.putExtra("ESAME_DATA", esame.data)
+            intent.putExtra("ESAME_CFU", esame.cfu)
+            intent.putExtra("ESAME_VOTO", esame.voto)
+            intent.putExtra("ESAME_STATO", esame.stato)
+
+            startActivity(intent)
+        }
+
+        recyclerViewEsami.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewEsami.adapter = adapter
+
+        btnAggiungiEsame.setOnClickListener {
+            val intent = Intent(requireContext(), AggiungiEsameActivity::class.java)
+            startActivity(intent)
+        }
+
+        caricaEsami()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::adapter.isInitialized) {
+            caricaEsami()
+        }
+    }
+
+    private fun caricaEsami() {
+        lifecycleScope.launch {
+            val db = AppDatabase.getInstance(requireContext())
+
+            val esami = withContext(Dispatchers.IO) {
+                db.esameDao().getTutti()
+            }
+
+            adapter.submitList(esami)
+
+            val media = calcolaMediaPesata(esami)
+
+            tvMedia.text = if (media > 0) {
+                "Media: %.1f".format(media)
+            } else {
+                "Media: --"
+            }
+        }
+    }
+
+    private fun calcolaMediaPesata(esami: List<Esame>): Double {
+        val superati = esami.filter {
+            it.stato == "superato" && it.voto > 0
+        }
+
+        if (superati.isEmpty()) {
+            return 0.0
+        }
+
+        val totalePunti = superati.sumOf {
+            it.voto * it.cfu
+        }
+
+        val totaleCfu = superati.sumOf {
+            it.cfu
+        }
+
+        return totalePunti.toDouble() / totaleCfu
     }
 }

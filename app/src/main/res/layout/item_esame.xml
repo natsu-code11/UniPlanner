@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    FILE: item_esame.xml
+    SCOPO: Layout della singola riga nella lista degli esami.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tvNomeEsame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome esame"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDataEsame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Data: --"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvCfuVoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CFU: -- | Voto: --"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvStatoEsame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stato: --"
+        android:textSize="14sp" />
+
+</LinearLayout>
