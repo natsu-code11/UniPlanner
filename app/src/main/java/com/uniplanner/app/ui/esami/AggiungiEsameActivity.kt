@@ -27,6 +27,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
     private lateinit var rbSuperato: RadioButton
     private lateinit var btnSalvaEsame: Button
     private lateinit var btnEliminaEsame: Button
+    private lateinit var btnFrecciaIndietroEsame: Button
 
     private var esameId: Int = -1
 
@@ -43,6 +44,11 @@ class AggiungiEsameActivity : AppCompatActivity() {
         rbSuperato = findViewById(R.id.rbSuperato)
         btnSalvaEsame = findViewById(R.id.btnSalvaEsame)
         btnEliminaEsame = findViewById(R.id.btnEliminaEsame)
+        btnFrecciaIndietroEsame = findViewById(R.id.btnFrecciaIndietroEsame)
+
+        btnFrecciaIndietroEsame.setOnClickListener {
+            finish()
+        }
 
         esameId = intent.getIntExtra("ESAME_ID", -1)
 
@@ -130,6 +136,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
             ).show()
             return
         }
+
         val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
 
         val corso = prefs.getString("corso", "") ?: ""
@@ -185,6 +192,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
         } else {
             "da sostenere"
         }
+
         val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
 
         val corso = prefs.getString("corso", "") ?: ""
@@ -192,7 +200,7 @@ class AggiungiEsameActivity : AppCompatActivity() {
         val semestre = prefs.getString("semestre", "") ?: ""
 
         val esame = Esame(
-            id = if (esameId == -1) 0 else esameId,
+            id = esameId,
             nome = nome,
             data = data,
             cfu = cfu,

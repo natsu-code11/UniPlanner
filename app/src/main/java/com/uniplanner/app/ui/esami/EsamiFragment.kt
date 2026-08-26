@@ -26,6 +26,7 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
     private lateinit var recyclerViewEsami: RecyclerView
     private lateinit var btnAggiungiEsame: Button
     private lateinit var btnTornaHome: Button
+    private lateinit var btnFrecciaHomeEsami: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +35,7 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
         recyclerViewEsami = view.findViewById(R.id.recyclerViewEsami)
         btnAggiungiEsame = view.findViewById(R.id.btnAggiungiEsame)
         btnTornaHome = view.findViewById(R.id.btnTornaHome)
-
+        btnFrecciaHomeEsami = view.findViewById(R.id.btnFrecciaHomeEsami)
         adapter = EsamiAdapter { esame ->
             val intent = Intent(requireContext(), AggiungiEsameActivity::class.java)
 
@@ -64,6 +65,11 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
             requireActivity().finish()
         }
 
+        btnFrecciaHomeEsami.setOnClickListener {
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
         caricaEsami()
     }
 
