@@ -13,6 +13,9 @@
         android:theme="@style/Theme.UniPlanner">
 
         <activity
+            android:name=".LoginActivity" />
+
+        <activity
             android:name=".ui.esami.AggiungiEsameActivity"
             android:exported="false" />
 

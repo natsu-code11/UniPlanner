@@ -26,10 +26,18 @@ class MainActivity : AppCompatActivity() {
 
         // controlla se è il primo avvio
         val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
+
+        val utenteAutenticato = prefs.getBoolean("utente_autenticato", false)
+
+        if (!utenteAutenticato) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         val primoAvvio = prefs.getBoolean("primo_avvio", true)
 
         if (primoAvvio) {
-            // prima volta → vai alla configurazione
             startActivity(Intent(this, ConfigurazioneActivity::class.java))
             finish()
             return

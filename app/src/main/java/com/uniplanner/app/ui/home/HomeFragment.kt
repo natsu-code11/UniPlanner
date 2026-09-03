@@ -11,6 +11,8 @@ import com.uniplanner.app.R
 import com.uniplanner.app.ui.esami.EsamiFragment
 import com.uniplanner.app.ui.lezioni.LezioniFragment
 import com.uniplanner.app.ui.scadenze.ScadenzeFragment
+import android.content.Intent
+import com.uniplanner.app.LoginActivity
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -50,6 +52,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 .setNegativeButton("Annulla", null)
                 .show()
+        }
+        val btnLogout = view.findViewById<Button>(R.id.btnLogout)
+    // bottone Logout
+        btnLogout.setOnClickListener {
+            val prefs = requireContext().getSharedPreferences(
+                "uniplanner_prefs",
+                android.content.Context.MODE_PRIVATE
+            )
+
+            prefs.edit()
+                .putBoolean("utente_autenticato", false)
+                .apply()
+
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 }
