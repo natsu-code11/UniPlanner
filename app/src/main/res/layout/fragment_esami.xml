@@ -1,72 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <!-- ============================================================
      FILE: fragment_esami.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Layout della schermata Esami. Contiene la lista degli
-            esami e la media voti in cima.
-            Verrà completato dalla Persona 2.
-     LEZIONE DI RIFERIMENTO: L10 (Layouts & UI), L13 (RecyclerView)
+     SCOPO: Schermata esami con lista e media voti in cima.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/white">
+    android:background="@color/background">
 
+    <!-- bottone per tornare alla Home -->
     <Button
-        android:id="@+id/btnFrecciaHomeEsami"
+        android:id="@+id/btnTornaHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="← Home"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:layout_marginBottom="8dp" />
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue"
+        android:layout_margin="8dp" />
 
+    <!-- titolo sezione -->
     <TextView
-        android:id="@+id/tvTitoloEsami"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Esami"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="I tuoi esami"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/parthenope_blue"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp" />
 
+    <!-- media voti -->
     <TextView
         android:id="@+id/tvMedia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Media: --"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp" />
+        android:textSize="15sp"
+        android:textColor="@color/parthenope_gold"
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp" />
 
-    <Button
-        android:id="@+id/btnAggiungiEsame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="+ Aggiungi esame"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/holo_blue_dark" />
-
-    <Button
-        android:id="@+id/btnTornaHome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Torna alla schermata principale"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:layout_marginTop="8dp" />
-
+    <!-- lista esami -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewEsami"
+        android:id="@+id/rvEsami"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="12dp" />
+        android:padding="8dp" />
+
+    <!-- bottone aggiungi esame -->
+    <Button
+        android:id="@+id/btnAggiungiEsame"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_margin="16dp"
+        android:text="+ Aggiungi esame"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_gold" />
 
 </LinearLayout>

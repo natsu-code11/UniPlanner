@@ -1,48 +1,103 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================
+     FILE: item_esame.xml
+     POSIZIONE: app/src/main/res/layout/
+     SCOPO: Layout di una singola riga nella lista esami.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
+     ============================================================ -->
 
-<!--
-    FILE: item_esame.xml
-    SCOPO: Layout della singola riga nella lista degli esami.
--->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="12dp"
-    android:background="@android:color/white">
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/tvNomeEsame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome esame"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+    <!-- striscia colorata a sinistra -->
+    <View
+        android:layout_width="4dp"
+        android:layout_height="60dp"
+        android:background="@color/parthenope_blue"
+        android:layout_marginEnd="12dp" />
 
-    <TextView
-        android:id="@+id/tvDataEsame"
-        android:layout_width="match_parent"
+    <!-- colonna centrale con nome, data, CFU, voto -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Data: --"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCfuVoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CFU: -- | Voto: --"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvNomeEsame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome esame"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
 
-    <TextView
-        android:id="@+id/tvStatoEsame"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvDataEsame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data: --"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCfuEsame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CFU: --"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvVotoEsame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voto: --"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- colonna destra con stato e bottone elimina -->
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stato: --"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvStatoEsame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="da sostenere"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <Button
+            android:id="@+id/btnEliminaEsame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:textSize="11sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#CC0000"
+            android:padding="4dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

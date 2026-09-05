@@ -1,10 +1,8 @@
 <!-- ============================================================
      FILE: fragment_scadenze.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Layout della schermata Scadenze. Contiene la lista
-            delle scadenze ordinate per data e priorità.
-            Verrà completato dalla Persona 3.
-     LEZIONE DI RIFERIMENTO: L10 (Layouts & UI), L13 (RecyclerView)
+     SCOPO: Schermata scadenze con lista ordinata per data.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
 <LinearLayout
@@ -12,13 +10,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background">
 
-    <TextView
+    <!-- bottone per tornare alla Home -->
+    <Button
+        android:id="@+id/btnTornaHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scadenze"
+        android:text="← Home"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue"
+        android:layout_margin="8dp" />
+
+    <!-- titolo sezione -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Le tue scadenze"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/parthenope_blue"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- lista scadenze -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvScadenze"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <!-- bottone aggiungi scadenza -->
+    <Button
+        android:id="@+id/btnAggiungiScadenza"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_margin="16dp"
+        android:text="+ Aggiungi scadenza"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_gold" />
 
 </LinearLayout>
