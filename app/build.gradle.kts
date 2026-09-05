@@ -38,23 +38,25 @@ android {
 }
 
 dependencies {
+    // biometrica — tenuta ma non usata per ora (LoginActivity disattivata)
     implementation("androidx.biometric:biometric:1.1.0")
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
 
-    // Room Database
-    implementation("androidx.room:room-runtime:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
-    kapt("androidx.room:room-compiler:2.8.4")
+    // Room Database — salvataggio dati locale
+    implementation("androidx.room:room-runtime:2.7.1")
+    implementation("androidx.room:room-ktx:2.7.1")
+    kapt("androidx.room:room-compiler:2.7.1")
 
-    // Coroutines
+    // Coroutines — operazioni in background
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-    // Gson
+    // Gson — lettura file JSON
     implementation("com.google.code.gson:gson:2.10.1")
 
     testImplementation(libs.junit)

@@ -1,10 +1,8 @@
 <!-- ============================================================
      FILE: fragment_lezioni.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Layout della schermata Lezioni. Contiene la lista
-            delle lezioni del giorno selezionato.
-            Verrà completato dalla Persona 1.
-     LEZIONE DI RIFERIMENTO: L10 (Layouts & UI), L13 (RecyclerView)
+     SCOPO: Schermata lezioni con bottoni giorni e lista lezioni.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
 <LinearLayout
@@ -12,13 +10,115 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background">
 
-    <TextView
+    <!-- bottone per tornare alla Home -->
+    <Button
+        android:id="@+id/btnTornaHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lezioni"
+        android:text="← Home"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_blue"
+        android:layout_margin="8dp" />
+
+    <!-- titolo sezione -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Le tue lezioni"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/parthenope_blue"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- riga bottoni giorni settimana -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp">
+
+        <Button
+            android:id="@+id/btnLun"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="Lun"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnMar"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="Mar"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnMer"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="Mer"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnGio"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="Gio"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnVen"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="Ven"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <!-- lista lezioni del giorno -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLezioni"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+
+    <!-- bottone aggiungi lezione -->
+    <Button
+        android:id="@+id/btnAggiungiLezione"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_margin="16dp"
+        android:text="+ Aggiungi lezione"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/parthenope_gold" />
 
 </LinearLayout>

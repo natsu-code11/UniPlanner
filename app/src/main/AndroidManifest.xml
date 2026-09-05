@@ -12,27 +12,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniPlanner">
 
-        <activity
-            android:name=".LoginActivity" />
+        <!-- LoginActivity disattivata temporaneamente -->
+        <!-- <activity android:name=".LoginActivity" /> -->
 
-        <activity
-            android:name=".ui.esami.AggiungiEsameActivity"
-            android:exported="false" />
-
+        <!-- Activity configurazione iniziale -->
         <activity
             android:name=".ConfigurazioneActivity"
             android:exported="false" />
 
+        <!-- Activity per aggiungere un esame -->
+        <activity
+            android:name=".ui.esami.AggiungiEsameActivity"
+            android:exported="false" />
+
+        <!-- Activity per aggiungere una lezione -->
+        <activity
+            android:name=".ui.lezioni.AggiungiLezioneActivity"
+            android:exported="false" />
+
+        <!-- Activity per aggiungere una scadenza -->
+        <activity
+            android:name=".ui.scadenze.AggiungiScadenzaActivity"
+            android:exported="false" />
+
+        <!-- Activity principale — punto di ingresso dell'app -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
     </application>

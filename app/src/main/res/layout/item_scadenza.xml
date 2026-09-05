@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================
+     FILE: item_scadenza.xml
+     POSIZIONE: app/src/main/res/layout/
+     SCOPO: Layout di una singola riga nella lista scadenze.
+            Mostra titolo, tipo, data, priorità e bottone elimina.
+     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:layout_marginBottom="8dp">
+
+    <!-- striscia colorata a sinistra -->
+    <View
+        android:layout_width="4dp"
+        android:layout_height="60dp"
+        android:background="@color/parthenope_gold"
+        android:layout_marginEnd="12dp" />
+
+    <!-- colonna centrale con titolo, tipo, data, priorità -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitoloScadenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titolo scadenza"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tvTipoScadenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:id="@+id/tvDataScadenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entro: --"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:id="@+id/tvPrioritaScadenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Priorità: --"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- bottone elimina a destra -->
+    <Button
+        android:id="@+id/btnEliminaScadenza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textSize="11sp"
+        android:textColor="@color/white"
+        android:backgroundTint="#CC0000"
+        android:padding="4dp" />
+
+</LinearLayout>

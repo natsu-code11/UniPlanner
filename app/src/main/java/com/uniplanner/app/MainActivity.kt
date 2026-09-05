@@ -3,7 +3,7 @@
 // POSIZIONE: app/src/main/java/com/uniplanner/app/
 // SCOPO: Schermata principale dell'app. Controlla se è il primo
 //        avvio e reindirizza alla configurazione se necessario.
-//        Gestisce la bottom navigation bar.
+//        Gestisce la navigazione tra i Fragment.
 // LEZIONE DI RIFERIMENTO: L09 (Activity), L12 (Fragments), L16 (SharedPreferences)
 // ============================================================
 
@@ -22,43 +22,40 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)  // collega il layout XML
 
-        // controlla se è il primo avvio
+        // legge le SharedPreferences per capire lo stato dell'app
         val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
 
-        val utenteAutenticato = prefs.getBoolean("utente_autenticato", false)
-
-        if (!utenteAutenticato) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            return
-        }
-
+        // controlla se è il primo avvio
         val primoAvvio = prefs.getBoolean("primo_avvio", true)
 
         if (primoAvvio) {
+            // prima volta → vai alla schermata di configurazione
             startActivity(Intent(this, ConfigurazioneActivity::class.java))
-            finish()
-            return
+            finish()  // chiude MainActivity così non si torna indietro
+            return    // esce da onCreate senza eseguire il resto
         }
 
         // mostra il nome dello studente nella toolbar
         val nome = prefs.getString("nome", "") ?: ""
         if (nome.isNotEmpty()) {
+            // aggiorna il testo del benvenuto con il nome salvato
             findViewById<TextView>(R.id.tvBenvenuto).text = "Ciao, $nome! 👋"
         }
 
-        // mostra HomeFragment all'avvio
+        // mostra HomeFragment all'avvio solo se non c'è già un Fragment attivo
         if (savedInstanceState == null) {
             mostraFragment(HomeFragment())
         }
-
     }
 
+    // funzione pubblica che sostituisce il Fragment visibile nel contenitore
+    // è pubblica perché viene chiamata anche da HomeFragment
     fun mostraFragment(fragment: androidx.fragment.app.Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+        supportFragmentManager.beginTransaction()  // inizia una transazione
+            .replace(R.id.fragmentContainer, fragment)  // sostituisce il Fragment
+            .addToBackStack(null)  // aggiunge al backstack → permette di tornare indietro con la freccia
+            .commit()  // applica la transazione
     }
 }
