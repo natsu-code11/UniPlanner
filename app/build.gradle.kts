@@ -40,6 +40,8 @@ android {
 dependencies {
     // biometrica — tenuta ma non usata per ora (LoginActivity disattivata)
     implementation("androidx.biometric:biometric:1.1.0")
+    // PdfBox-Android — lettura PDF (libreria esterna)
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)

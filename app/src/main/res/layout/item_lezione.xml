@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- ============================================================
      FILE: item_lezione.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Layout di una singola riga nella lista lezioni.
-            Mostra materia, ora e aula con un bottone elimina.
-     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
+     SCOPO: Layout singola riga lezione con data.
      ============================================================ -->
 
 <LinearLayout
@@ -17,21 +14,18 @@
     android:background="@color/white"
     android:layout_marginBottom="8dp">
 
-    <!-- striscia colorata a sinistra -->
     <View
         android:layout_width="4dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@color/parthenope_blue"
         android:layout_marginEnd="12dp" />
 
-    <!-- colonna centrale con materia e aula -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- nome materia -->
         <TextView
             android:id="@+id/tvMateria"
             android:layout_width="wrap_content"
@@ -41,7 +35,6 @@
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
-        <!-- aula -->
         <TextView
             android:id="@+id/tvAula"
             android:layout_width="wrap_content"
@@ -50,9 +43,18 @@
             android:textSize="13sp"
             android:textColor="@color/text_secondary" />
 
+        <!-- data lezione — visibile solo se presente -->
+        <TextView
+            android:id="@+id/tvDataLezione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="21/09/2026"
+            android:textSize="12sp"
+            android:textColor="@color/parthenope_gold"
+            android:visibility="gone" />
+
     </LinearLayout>
 
-    <!-- ora lezione a destra -->
     <TextView
         android:id="@+id/tvOra"
         android:layout_width="wrap_content"
@@ -63,7 +65,6 @@
         android:textColor="@color/parthenope_gold"
         android:layout_marginEnd="8dp" />
 
-    <!-- bottone elimina -->
     <Button
         android:id="@+id/btnElimina"
         android:layout_width="wrap_content"

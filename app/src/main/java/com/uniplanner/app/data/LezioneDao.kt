@@ -1,35 +1,40 @@
+// ============================================================
 // FILE: LezioneDao.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
-// SCOPO: Definisce le operazioni sul database per la tabella "lezioni".
-//        Le lezioni vengono caricate dal JSON al primo avvio,
-//        poi l'utente può aggiungerne o eliminarne manualmente.
-// LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query, @Insert, @Delete)
+// SCOPO: Operazioni sul database per le lezioni.
+//        Aggiunto ordinamento per ora.
+// LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query)
+// ============================================================
 
 package com.uniplanner.app.data
 
-import androidx.room.Dao         // marca questa interfaccia come DAO
-import androidx.room.Delete      // annotazione per eliminare un record
-import androidx.room.Insert      // annotazione per inserire un record
-import androidx.room.Query       // annotazione per query SQL personalizzate
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 
 @Dao
 interface LezioneDao {
 
-    @Insert                      // inserisce una lezione nella tabella
+    @Insert
     suspend fun inserisci(lezione: Lezione)
 
-    @Delete                      // elimina una lezione dalla tabella
+    @Insert
+    suspend fun inserisciTutte(lezioni: List<Lezione>)  // inserisce lista intera — utile per import PDF
+
+    @Delete
     suspend fun elimina(lezione: Lezione)
 
-    @Query("SELECT * FROM lezioni ORDER BY giorno ASC, ora ASC")  // tutte le lezioni ordinate per giorno e ora
+    @Query("SELECT * FROM lezioni ORDER BY giorno ASC, ora ASC")
     suspend fun getTutte(): List<Lezione>
 
-    @Query("SELECT * FROM lezioni WHERE giorno = :giorno ORDER BY ora ASC")  // lezioni di un giorno specifico, es. "Lunedì"
+    // lezioni di un giorno specifico ordinate per ora crescente
+    @Query("SELECT * FROM lezioni WHERE giorno = :giorno ORDER BY ora ASC")
     suspend fun getPerGiorno(giorno: String): List<Lezione>
 
-    @Query("SELECT * FROM lezioni ORDER BY ora ASC LIMIT 1")  // prossima lezione (per la Home)
+    @Query("SELECT * FROM lezioni ORDER BY ora ASC LIMIT 1")
     suspend fun getProssima(): Lezione?
 
-    @Query("SELECT COUNT(*) FROM lezioni")  // conta quante lezioni ci sono (utile per sapere se il JSON è già stato caricato)
+    @Query("SELECT COUNT(*) FROM lezioni")
     suspend fun contaTutte(): Int
 }

@@ -1,9 +1,7 @@
 // ============================================================
 // FILE: EsamiFragment.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/esami/
-// SCOPO: Schermata che mostra la lista degli esami.
-//        Calcola e mostra la media voti in cima.
-//        L'utente può aggiungere ed eliminare esami.
+// SCOPO: Schermata esami con contatore e media voti.
 // LEZIONE DI RIFERIMENTO: L12 (Fragment), L13 (RecyclerView), L15 (Room)
 // ============================================================
 
@@ -26,52 +24,41 @@ import kotlinx.coroutines.withContext
 
 class EsamiFragment : Fragment(R.layout.fragment_esami) {
 
-    // adapter per la RecyclerView degli esami
     private lateinit var adapter: EsamiAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // bottone torna alla Home — torna al Fragment precedente
         view.findViewById<Button>(R.id.btnTornaHome).setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        // collegamento alla RecyclerView
         val rvEsami = view.findViewById<RecyclerView>(R.id.rvEsami)
 
-        // crea l'adapter — quando si preme X elimina l'esame
         adapter = EsamiAdapter(emptyList()) { esame ->
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    // elimina l'esame dal database in background
                     AppDatabase.getInstance(requireContext()).esameDao().elimina(esame)
                 }
-                caricaEsami()  // ricarica la lista dopo l'eliminazione
+                caricaEsami()
             }
         }
 
-        // imposta il layout verticale e collega l'adapter
         rvEsami.layoutManager = LinearLayoutManager(requireContext())
         rvEsami.adapter = adapter
 
-        // bottone aggiungi esame — apre il form
         view.findViewById<Button>(R.id.btnAggiungiEsame).setOnClickListener {
-            val intent = Intent(requireContext(), AggiungiEsameActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(requireContext(), AggiungiEsameActivity::class.java))
         }
 
-        // carica gli esami all'avvio
         caricaEsami()
     }
 
-    // viene chiamato ogni volta che si torna a questo Fragment
     override fun onResume() {
         super.onResume()
         caricaEsami()
     }
 
-    // legge gli esami dal database e aggiorna lista e media
     private fun caricaEsami() {
         lifecycleScope.launch {
             val esami = withContext(Dispatchers.IO) {
@@ -79,7 +66,24 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
             }
             adapter.aggiorna(esami)
 
-            // calcola la media pesata sugli esami superati
+            // mostra messaggio lista vuota o la lista
+            val tvVuota = view?.findViewById<TextView>(R.id.tvListaVuotaEsami)
+            val rv      = view?.findViewById<RecyclerView>(R.id.rvEsami)
+            if (esami.isEmpty()) {
+                tvVuota?.visibility = View.VISIBLE
+                rv?.visibility      = View.GONE
+            } else {
+                tvVuota?.visibility = View.GONE
+                rv?.visibility      = View.VISIBLE
+            }
+
+            // contatore esami superati su totale
+            val superati = esami.count { it.stato == "superato" }
+            val totale   = esami.size
+            view?.findViewById<TextView>(R.id.tvContatore)?.text =
+                "Superati: $superati su $totale"
+
+            // calcola media pesata
             val soloSuperati = esami.filter { it.stato == "superato" && it.voto > 0 }
             if (soloSuperati.isEmpty()) {
                 view?.findViewById<TextView>(R.id.tvMedia)?.text = "Media: --"
@@ -87,7 +91,8 @@ class EsamiFragment : Fragment(R.layout.fragment_esami) {
                 val sommaPesata = soloSuperati.sumOf { it.voto * it.cfu }
                 val sommaCfu    = soloSuperati.sumOf { it.cfu }
                 val media       = sommaPesata.toDouble() / sommaCfu
-                view?.findViewById<TextView>(R.id.tvMedia)?.text = "Media: ${"%.2f".format(media)}"
+                view?.findViewById<TextView>(R.id.tvMedia)?.text =
+                    "Media: ${"%.2f".format(media)}"
             }
         }
     }

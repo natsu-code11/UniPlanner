@@ -1,8 +1,7 @@
 <!-- ============================================================
      FILE: fragment_esami.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Schermata esami con lista e media voti in cima.
-     LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
+     SCOPO: Schermata esami con contatore e media voti.
      ============================================================ -->
 
 <LinearLayout
@@ -12,7 +11,6 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- bottone per tornare alla Home -->
     <Button
         android:id="@+id/btnTornaHome"
         android:layout_width="wrap_content"
@@ -23,7 +21,6 @@
         android:backgroundTint="@color/parthenope_blue"
         android:layout_margin="8dp" />
 
-    <!-- titolo sezione -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +31,18 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="4dp" />
+
+    <!-- contatore esami superati su totale -->
+    <TextView
+        android:id="@+id/tvContatore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Superati: 0 su 0"
+        android:textSize="13sp"
+        android:textColor="@color/text_secondary"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="2dp" />
 
     <!-- media voti -->
     <TextView
@@ -48,7 +57,18 @@
         android:paddingEnd="16dp"
         android:paddingBottom="8dp" />
 
-    <!-- lista esami -->
+    <!-- messaggio lista vuota -->
+    <TextView
+        android:id="@+id/tvListaVuotaEsami"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Nessun esame aggiunto.&#10;Premi + per aggiungerne uno!"
+        android:textSize="15sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvEsami"
         android:layout_width="match_parent"
@@ -56,7 +76,6 @@
         android:layout_weight="1"
         android:padding="8dp" />
 
-    <!-- bottone aggiungi esame -->
     <Button
         android:id="@+id/btnAggiungiEsame"
         android:layout_width="match_parent"

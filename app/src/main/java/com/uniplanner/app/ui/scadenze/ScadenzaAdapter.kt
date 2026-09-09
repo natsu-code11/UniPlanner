@@ -1,70 +1,80 @@
 // ============================================================
 // FILE: ScadenzaAdapter.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/scadenze/
-// SCOPO: Adapter per la RecyclerView delle scadenze.
-//        Mostra titolo, tipo, data e priorità di ogni scadenza.
+// SCOPO: Adapter scadenze con conferma eliminazione e colori priorità.
 // LEZIONE DI RIFERIMENTO: L13 (RecyclerView, Adapter, ViewHolder)
 // ============================================================
 
 package com.uniplanner.app.ui.scadenze
 
-import android.view.LayoutInflater   // serve per gonfiare il layout XML di una riga
-import android.view.View             // rappresenta un elemento visivo sullo schermo
-import android.view.ViewGroup        // contenitore di View
-import android.widget.Button         // widget bottone
-import android.widget.TextView       // widget testo
-import androidx.recyclerview.widget.RecyclerView  // classe base della lista scorrevole
-import com.uniplanner.app.R          // riferimento alle risorse del progetto
-import com.uniplanner.app.data.Scadenza  // il modello dati della scadenza
+import android.app.AlertDialog
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.uniplanner.app.R
+import com.uniplanner.app.data.Scadenza
 
 class ScadenzaAdapter(
-    private var lista: List<Scadenza>,            // lista di scadenze da mostrare
-    private val onElimina: (Scadenza) -> Unit     // funzione chiamata quando si preme X
+    private var lista: List<Scadenza>,
+    private val onElimina: (Scadenza) -> Unit
 ) : RecyclerView.Adapter<ScadenzaAdapter.ScadenzaViewHolder>() {
 
-    // ViewHolder: contiene i riferimenti ai widget di una singola riga
     inner class ScadenzaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitolo   = itemView.findViewById<TextView>(R.id.tvTitoloScadenza)    // titolo
-        val tvTipo     = itemView.findViewById<TextView>(R.id.tvTipoScadenza)      // tipo
-        val tvData     = itemView.findViewById<TextView>(R.id.tvDataScadenza)      // data
-        val tvPriorita = itemView.findViewById<TextView>(R.id.tvPrioritaScadenza)  // priorità
-        val btnElimina = itemView.findViewById<Button>(R.id.btnEliminaScadenza)    // bottone elimina
+        val tvTitolo   = itemView.findViewById<TextView>(R.id.tvTitoloScadenza)
+        val tvTipo     = itemView.findViewById<TextView>(R.id.tvTipoScadenza)
+        val tvData     = itemView.findViewById<TextView>(R.id.tvDataScadenza)
+        val tvPriorita = itemView.findViewById<TextView>(R.id.tvPrioritaScadenza)
+        val btnElimina = itemView.findViewById<Button>(R.id.btnEliminaScadenza)
     }
 
-    // crea una nuova riga gonfiando il layout item_scadenza.xml
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScadenzaViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_scadenza, parent, false)
         return ScadenzaViewHolder(view)
     }
 
-    // riempie una riga con i dati della scadenza alla posizione corrente
     override fun onBindViewHolder(holder: ScadenzaViewHolder, position: Int) {
-        val scadenza = lista[position]                          // prende la scadenza
-        holder.tvTitolo.text   = scadenza.titolo               // mostra il titolo
-        holder.tvTipo.text     = scadenza.tipo                 // mostra il tipo
-        holder.tvData.text     = "Entro: ${scadenza.data}"    // mostra la data
-        holder.tvPriorita.text = "Priorità: ${scadenza.priorita}"  // mostra la priorità
+        val scadenza = lista[position]
+        holder.tvTitolo.text   = scadenza.titolo
+        holder.tvTipo.text     = scadenza.tipo
+        holder.tvData.text     = "Entro: ${scadenza.data}"
+        holder.tvPriorita.text = "Priorità: ${scadenza.priorita}"
 
-        // colora la priorità: rosso alta, arancione media, verde bassa
+        // colora la riga e la priorità in base all'urgenza
         when (scadenza.priorita) {
-            "alta"  -> holder.tvPriorita.setTextColor(android.graphics.Color.parseColor("#C62828"))
-            "media" -> holder.tvPriorita.setTextColor(android.graphics.Color.parseColor("#E65100"))
-            "bassa" -> holder.tvPriorita.setTextColor(android.graphics.Color.parseColor("#2E7D32"))
+            "alta" -> {
+                holder.tvPriorita.setTextColor(Color.parseColor("#C62828"))
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))  // rosso chiaro
+            }
+            "media" -> {
+                holder.tvPriorita.setTextColor(Color.parseColor("#E65100"))
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFF3E0"))  // arancione chiaro
+            }
+            "bassa" -> {
+                holder.tvPriorita.setTextColor(Color.parseColor("#2E7D32"))
+                holder.itemView.setBackgroundColor(Color.parseColor("#F1F8E9"))  // verde chiaro
+            }
         }
 
-        // quando si preme X chiama la funzione di eliminazione
+        // chiede conferma prima di eliminare
         holder.btnElimina.setOnClickListener {
-            onElimina(scadenza)
+            AlertDialog.Builder(holder.itemView.context)
+                .setTitle("Elimina scadenza")
+                .setMessage("Vuoi eliminare ${scadenza.titolo}?")
+                .setPositiveButton("Sì") { _, _ -> onElimina(scadenza) }
+                .setNegativeButton("Annulla", null)
+                .show()
         }
     }
 
-    // restituisce il numero totale di scadenze nella lista
     override fun getItemCount() = lista.size
 
-    // aggiorna la lista e ridisegna la RecyclerView
     fun aggiorna(nuovaLista: List<Scadenza>) {
-        lista = nuovaLista       // sostituisce la lista vecchia
-        notifyDataSetChanged()   // dice alla RecyclerView di ridisegnarsi
+        lista = nuovaLista
+        notifyDataSetChanged()
     }
 }

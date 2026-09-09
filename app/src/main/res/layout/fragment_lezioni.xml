@@ -2,6 +2,7 @@
      FILE: fragment_lezioni.xml
      POSIZIONE: app/src/main/res/layout/
      SCOPO: Schermata lezioni con bottoni giorni e lista lezioni.
+            Mostra messaggio quando lista è vuota.
      LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
@@ -100,6 +101,18 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+
+    <!-- messaggio lista vuota — visibile solo quando non ci sono lezioni -->
+    <TextView
+        android:id="@+id/tvListaVuotaLezioni"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Nessuna lezione per questo giorno.&#10;Premi + per aggiungerne una!"
+        android:textSize="15sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:visibility="gone" />
 
     <!-- lista lezioni del giorno -->
     <androidx.recyclerview.widget.RecyclerView

@@ -2,6 +2,7 @@
      FILE: fragment_scadenze.xml
      POSIZIONE: app/src/main/res/layout/
      SCOPO: Schermata scadenze con lista ordinata per data.
+            Mostra messaggio quando lista è vuota.
      LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
@@ -12,7 +13,6 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- bottone per tornare alla Home -->
     <Button
         android:id="@+id/btnTornaHome"
         android:layout_width="wrap_content"
@@ -23,7 +23,6 @@
         android:backgroundTint="@color/parthenope_blue"
         android:layout_margin="8dp" />
 
-    <!-- titolo sezione -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +34,18 @@
         android:paddingEnd="16dp"
         android:paddingBottom="8dp" />
 
-    <!-- lista scadenze -->
+    <!-- messaggio lista vuota -->
+    <TextView
+        android:id="@+id/tvListaVuotaScadenze"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Nessuna scadenza aggiunta.&#10;Premi + per aggiungerne una!"
+        android:textSize="15sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvScadenze"
         android:layout_width="match_parent"
@@ -43,7 +53,6 @@
         android:layout_weight="1"
         android:padding="8dp" />
 
-    <!-- bottone aggiungi scadenza -->
     <Button
         android:id="@+id/btnAggiungiScadenza"
         android:layout_width="match_parent"
