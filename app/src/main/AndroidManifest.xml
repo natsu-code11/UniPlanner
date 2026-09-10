@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- permesso per leggere file dal dispositivo -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,14 +24,14 @@
             android:name=".ConfigurazioneActivity"
             android:exported="false" />
 
-        <!-- Activity per aggiungere un esame -->
-        <activity
-            android:name=".ui.esami.AggiungiEsameActivity"
-            android:exported="false" />
-
         <!-- Activity per aggiungere una lezione -->
         <activity
             android:name=".ui.lezioni.AggiungiLezioneActivity"
+            android:exported="false" />
+
+        <!-- Activity per aggiungere un esame -->
+        <activity
+            android:name=".ui.esami.AggiungiEsameActivity"
             android:exported="false" />
 
         <!-- Activity per aggiungere una scadenza -->

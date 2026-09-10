@@ -1,8 +1,7 @@
 <!-- ============================================================
      FILE: fragment_lezioni.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Schermata lezioni con bottoni giorni e lista lezioni.
-            Mostra messaggio quando lista è vuota.
+     SCOPO: Schermata lezioni con bottoni giorni, lista e importa PDF.
      LEZIONE DI RIFERIMENTO: L10 (Layouts), L13 (RecyclerView)
      ============================================================ -->
 
@@ -102,7 +101,7 @@
 
     </LinearLayout>
 
-    <!-- messaggio lista vuota — visibile solo quando non ci sono lezioni -->
+    <!-- messaggio lista vuota -->
     <TextView
         android:id="@+id/tvListaVuotaLezioni"
         android:layout_width="match_parent"
@@ -122,16 +121,39 @@
         android:layout_weight="1"
         android:padding="8dp" />
 
-    <!-- bottone aggiungi lezione -->
-    <Button
-        android:id="@+id/btnAggiungiLezione"
+    <!-- riga bottoni aggiungi e importa -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_margin="16dp"
-        android:text="+ Aggiungi lezione"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/parthenope_gold" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- bottone aggiungi lezione manualmente -->
+        <Button
+            android:id="@+id/btnAggiungiLezione"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="+ Aggiungi"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_gold" />
+
+        <!-- bottone importa da PDF -->
+        <Button
+            android:id="@+id/btnImportaPdf"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="📄 Importa PDF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+    </LinearLayout>
 
 </LinearLayout>
