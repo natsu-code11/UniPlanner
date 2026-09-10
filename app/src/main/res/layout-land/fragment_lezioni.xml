@@ -1,0 +1,149 @@
+<!-- ============================================================
+     FILE: fragment_lezioni.xml (landscape)
+     POSIZIONE: app/src/main/res/layout-land/
+     SCOPO: Lezioni ottimizzata per tablet landscape.
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/background">
+
+    <!-- colonna sinistra: controlli -->
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btnTornaHome"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="← Home"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giorno"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/parthenope_blue"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnLun"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:text="Lunedì"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnMar"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:text="Martedì"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnMer"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:text="Mercoledì"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnGio"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="4dp"
+            android:text="Giovedì"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnVen"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginBottom="12dp"
+            android:text="Venerdì"
+            android:textSize="11sp"
+            android:backgroundTint="@color/parthenope_blue"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnAggiungiLezione"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="4dp"
+            android:text="+ Aggiungi"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_gold" />
+
+        <Button
+            android:id="@+id/btnImportaPdf"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="📄 PDF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+    </LinearLayout>
+
+    <!-- colonna destra: lista lezioni -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Le tue lezioni"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/parthenope_blue"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/tvListaVuotaLezioni"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Nessuna lezione per questo giorno.&#10;Premi + per aggiungerne una!"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLezioni"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,127 @@
+<!-- ============================================================
+     FILE: fragment_home.xml (landscape)
+     POSIZIONE: app/src/main/res/layout-land/
+     SCOPO: Home ottimizzata per tablet landscape — bottoni in griglia.
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvSaluto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bentornato! 👋"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/parthenope_blue"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cosa vuoi gestire oggi?"
+        android:textSize="13sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- prossima scadenza -->
+    <TextView
+        android:id="@+id/tvProssimaScadenza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:background="@color/parthenope_blue"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <!-- prima riga bottoni: Lezioni e Esami -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <Button
+            android:id="@+id/btnLezioni"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="📚  Lezioni"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+        <Button
+            android:id="@+id/btnEsami"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="📝  Esami"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+    </LinearLayout>
+
+    <!-- seconda riga bottoni: Scadenze e Ripristina -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <Button
+            android:id="@+id/btnScadenze"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="⏰  Scadenze"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue" />
+
+        <Button
+            android:id="@+id/btnRipristina"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="🔄  Ripristina"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#CC0000"
+            android:backgroundTint="#FFEEEE" />
+
+    </LinearLayout>
+
+    <!-- bottone logout -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="🚪  Logout"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="#CC0000" />
+
+</LinearLayout>

@@ -1,0 +1,98 @@
+<!-- ============================================================
+     FILE: fragment_esami.xml (landscape)
+     POSIZIONE: app/src/main/res/layout-land/
+     SCOPO: Esami ottimizzata per tablet landscape.
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/background">
+
+    <!-- colonna sinistra: info e controlli -->
+    <LinearLayout
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btnTornaHome"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="← Home"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_blue"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I tuoi esami"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/parthenope_blue"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvContatore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Superati: 0 su 0"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvMedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Media: --"
+            android:textSize="14sp"
+            android:textColor="@color/parthenope_gold"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnAggiungiEsame"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="+ Aggiungi"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/parthenope_gold" />
+
+    </LinearLayout>
+
+    <!-- colonna destra: lista esami -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvListaVuotaEsami"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Nessun esame aggiunto.&#10;Premi + per aggiungerne uno!"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEsami"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

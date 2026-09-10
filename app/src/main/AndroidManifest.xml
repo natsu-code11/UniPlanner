@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- permesso per leggere file dal dispositivo -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
@@ -16,33 +15,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UniPlanner">
 
-        <!-- LoginActivity disattivata temporaneamente -->
         <!-- <activity android:name=".LoginActivity" /> -->
 
-        <!-- Activity configurazione iniziale -->
         <activity
             android:name=".ConfigurazioneActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
 
-        <!-- Activity per aggiungere una lezione -->
         <activity
             android:name=".ui.lezioni.AggiungiLezioneActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
 
-        <!-- Activity per aggiungere un esame -->
         <activity
             android:name=".ui.esami.AggiungiEsameActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
 
-        <!-- Activity per aggiungere una scadenza -->
         <activity
             android:name=".ui.scadenze.AggiungiScadenzaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="fullSensor" />
 
-        <!-- Activity principale — punto di ingresso dell'app -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

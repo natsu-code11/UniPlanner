@@ -1,0 +1,65 @@
+<!-- ============================================================
+     FILE: activity_main.xml (landscape)
+     POSIZIONE: app/src/main/res/layout-land/
+     SCOPO: Layout principale ottimizzato per tablet in orizzontale.
+            La toolbar è a sinistra, il contenuto a destra.
+     ============================================================ -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/background">
+
+    <!-- barra laterale sinistra con nome app -->
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@color/parthenope_blue"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UniPlanner"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvBenvenuto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organizza la tua università"
+            android:textColor="@color/parthenope_gold"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/parthenope_gold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parthenope"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:textStyle="italic"
+            android:alpha="0.8" />
+
+    </LinearLayout>
+
+    <!-- contenitore Fragment a destra -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
