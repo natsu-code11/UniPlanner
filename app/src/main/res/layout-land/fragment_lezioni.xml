@@ -1,7 +1,7 @@
 <!-- ============================================================
      FILE: fragment_lezioni.xml (landscape)
      POSIZIONE: app/src/main/res/layout-land/
-     SCOPO: Lezioni ottimizzata per tablet landscape.
+     SCOPO: Lezioni ottimizzata per tablet 11 pollici landscape.
      ============================================================ -->
 
 <LinearLayout
@@ -13,27 +13,27 @@
 
     <!-- colonna sinistra: controlli -->
     <LinearLayout
-        android:layout_width="180dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@color/white">
 
         <Button
             android:id="@+id/btnTornaHome"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:text="← Home"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:backgroundTint="@color/parthenope_blue"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giorno"
-            android:textSize="13sp"
+            android:text="Seleziona giorno"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/parthenope_blue"
             android:layout_marginBottom="8dp" />
@@ -41,60 +41,60 @@
         <Button
             android:id="@+id/btnLun"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="6dp"
             android:text="Lunedì"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:backgroundTint="@color/parthenope_blue"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnMar"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="6dp"
             android:text="Martedì"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:backgroundTint="@color/parthenope_blue"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnMer"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="6dp"
             android:text="Mercoledì"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:backgroundTint="@color/parthenope_blue"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnGio"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="6dp"
             android:text="Giovedì"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:backgroundTint="@color/parthenope_blue"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnVen"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="12dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="16dp"
             android:text="Venerdì"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:backgroundTint="@color/parthenope_blue"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnAggiungiLezione"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="4dp"
-            android:text="+ Aggiungi"
-            android:textSize="11sp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:text="+ Aggiungi lezione"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:backgroundTint="@color/parthenope_gold" />
@@ -102,9 +102,9 @@
         <Button
             android:id="@+id/btnImportaPdf"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="📄 PDF"
-            android:textSize="11sp"
+            android:layout_height="48dp"
+            android:text="📄 Importa PDF"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:backgroundTint="@color/parthenope_blue" />
@@ -121,10 +121,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Le tue lezioni"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/parthenope_blue"
-            android:padding="12dp" />
+            android:padding="16dp" />
 
         <TextView
             android:id="@+id/tvListaVuotaLezioni"
@@ -132,7 +132,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Nessuna lezione per questo giorno.&#10;Premi + per aggiungerne una!"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/text_secondary"
             android:gravity="center"
             android:visibility="gone" />
