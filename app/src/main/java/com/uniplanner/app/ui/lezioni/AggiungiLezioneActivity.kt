@@ -1,20 +1,21 @@
 // ============================================================
 // FILE: AggiungiLezioneActivity.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/lezioni/
-// SCOPO: Schermata con il form per aggiungere una nuova lezione.
-//        L'utente inserisce materia, giorno, ora e aula.
-//        I dati vengono salvati nel database Room.
+// SCOPO: Form per aggiungere O modificare una lezione.
+//        Se riceve un ID via Intent carica la lezione esistente.
 // LEZIONE DI RIFERIMENTO: L09 (Activity), L10 (UI), L11 (Intent), L15 (Room)
 // ============================================================
 
 package com.uniplanner.app.ui.lezioni
 
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.widget.ArrayAdapter    // crea la lista di opzioni per lo Spinner
-import android.widget.Button          // widget bottone
-import android.widget.EditText        // widget campo testo modificabile
-import android.widget.Spinner         // widget menu a tendina
-import android.widget.Toast           // messaggio popup temporaneo
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.uniplanner.app.R
@@ -23,22 +24,27 @@ import com.uniplanner.app.data.Lezione
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class AggiungiLezioneActivity : AppCompatActivity() {
 
+    private var dataSelezionata = ""
+    private var lezioneId = -1  // -1 significa nuova lezione
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_aggiungi_lezione)  // collega il layout
+        setContentView(R.layout.activity_aggiungi_lezione)
 
-        // collegamento ai widget del layout
-        val etMateria     = findViewById<EditText>(R.id.etMateria)
-        val spinnerGiorno = findViewById<Spinner>(R.id.spinnerGiorno)
-        val etOra         = findViewById<EditText>(R.id.etOra)
-        val etAula        = findViewById<EditText>(R.id.etAula)
-        val btnSalva      = findViewById<Button>(R.id.btnSalvaLezione)
-        val btnAnnulla    = findViewById<Button>(R.id.btnAnnullaLezione)
+        val tvTitolo          = findViewById<TextView>(R.id.tvTitoloFormLezione)
+        val etMateria         = findViewById<EditText>(R.id.etMateria)
+        val spinnerGiorno     = findViewById<Spinner>(R.id.spinnerGiorno)
+        val btnSelezionaData  = findViewById<Button>(R.id.btnSelezionaData)
+        val tvDataSelezionata = findViewById<TextView>(R.id.tvDataSelezionata)
+        val etOra             = findViewById<EditText>(R.id.etOra)
+        val etAula            = findViewById<EditText>(R.id.etAula)
+        val btnSalva          = findViewById<Button>(R.id.btnSalvaLezione)
+        val btnAnnulla        = findViewById<Button>(R.id.btnAnnullaLezione)
 
-        // popola lo spinner con i giorni della settimana
         val giorni = listOf("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì")
         spinnerGiorno.adapter = ArrayAdapter(
             this,
@@ -46,47 +52,86 @@ class AggiungiLezioneActivity : AppCompatActivity() {
             giorni
         )
 
-        // bottone annulla — torna alla schermata precedente
-        btnAnnulla.setOnClickListener {
-            finish()  // chiude questa Activity
+        // controlla se stiamo modificando una lezione esistente
+        lezioneId = intent.getIntExtra("LEZIONE_ID", -1)
+        if (lezioneId != -1) {
+            tvTitolo.text = "Modifica lezione"
+            lifecycleScope.launch {
+                val lezione = withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(applicationContext).lezioneDao().getById(lezioneId)
+                }
+                lezione?.let {
+                    etMateria.setText(it.materia)
+                    etOra.setText(it.ora)
+                    etAula.setText(it.aula)
+                    dataSelezionata = it.data
+                    tvDataSelezionata.text = if (it.data.isNotEmpty()) it.data else "Nessuna data selezionata"
+                    val index = giorni.indexOf(it.giorno)
+                    if (index >= 0) spinnerGiorno.setSelection(index)
+                }
+            }
         }
 
-        // bottone salva — salva la lezione nel database
+        // DatePicker
+        btnSelezionaData.setOnClickListener {
+            val cal = Calendar.getInstance()
+            DatePickerDialog(
+                this,
+                { _, anno, mese, giorno ->
+                    dataSelezionata = "$giorno/${mese + 1}/$anno"
+                    tvDataSelezionata.text = dataSelezionata
+                },
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        btnAnnulla.setOnClickListener { finish() }
+
         btnSalva.setOnClickListener {
-            val materia = etMateria.text.toString().trim()  // legge il testo inserito
+            val materia = etMateria.text.toString().trim()
             val giorno  = spinnerGiorno.selectedItem.toString()
             val ora     = etOra.text.toString().trim()
             val aula    = etAula.text.toString().trim()
 
-            // controlla che i campi non siano vuoti
             if (materia.isEmpty() || ora.isEmpty() || aula.isEmpty()) {
                 Toast.makeText(this, "Compila tutti i campi!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener  // esce senza salvare
+                return@setOnClickListener
             }
 
-            // crea l'oggetto Lezione con i dati inseriti
-            val nuovaLezione = Lezione(
-                materia = materia,
-                giorno  = giorno,
-                ora     = ora,
-                aula    = aula
-            )
-
-            // salva nel database in background
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
-                    // operazione lenta → eseguita in background
-                    AppDatabase.getInstance(applicationContext)
-                        .lezioneDao()
-                        .inserisci(nuovaLezione)
+                    val db = AppDatabase.getInstance(applicationContext)
+                    if (lezioneId == -1) {
+                        db.lezioneDao().inserisci(
+                            Lezione(
+                                materia = materia,
+                                giorno  = giorno,
+                                ora     = ora,
+                                aula    = aula,
+                                data    = dataSelezionata
+                            )
+                        )
+                    } else {
+                        db.lezioneDao().aggiorna(
+                            Lezione(
+                                id      = lezioneId,
+                                materia = materia,
+                                giorno  = giorno,
+                                ora     = ora,
+                                aula    = aula,
+                                data    = dataSelezionata
+                            )
+                        )
+                    }
                 }
-                // torna alla schermata precedente dopo il salvataggio
                 Toast.makeText(
                     this@AggiungiLezioneActivity,
-                    "Lezione salvata!",
+                    if (lezioneId == -1) "Lezione salvata!" else "Lezione modificata!",
                     Toast.LENGTH_SHORT
                 ).show()
-                finish()  // chiude questa Activity
+                finish()
             }
         }
     }

@@ -1,13 +1,15 @@
 // ============================================================
 // FILE: ScadenzaAdapter.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/scadenze/
-// SCOPO: Adapter scadenze con conferma eliminazione e colori priorità.
+// SCOPO: Adapter scadenze con conferma eliminazione e modifica.
+//        Toccare una riga apre il form di modifica.
 // LEZIONE DI RIFERIMENTO: L13 (RecyclerView, Adapter, ViewHolder)
 // ============================================================
 
 package com.uniplanner.app.ui.scadenze
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -44,20 +46,27 @@ class ScadenzaAdapter(
         holder.tvData.text     = "Entro: ${scadenza.data}"
         holder.tvPriorita.text = "Priorità: ${scadenza.priorita}"
 
-        // colora la riga e la priorità in base all'urgenza
+        // colora la riga in base alla priorità
         when (scadenza.priorita) {
             "alta" -> {
                 holder.tvPriorita.setTextColor(Color.parseColor("#C62828"))
-                holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))  // rosso chiaro
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))
             }
             "media" -> {
                 holder.tvPriorita.setTextColor(Color.parseColor("#E65100"))
-                holder.itemView.setBackgroundColor(Color.parseColor("#FFF3E0"))  // arancione chiaro
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFF3E0"))
             }
             "bassa" -> {
                 holder.tvPriorita.setTextColor(Color.parseColor("#2E7D32"))
-                holder.itemView.setBackgroundColor(Color.parseColor("#F1F8E9"))  // verde chiaro
+                holder.itemView.setBackgroundColor(Color.parseColor("#F1F8E9"))
             }
+        }
+
+        // toccare la riga apre il form di modifica
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, AggiungiScadenzaActivity::class.java)
+            intent.putExtra("SCADENZA_ID", scadenza.id)
+            holder.itemView.context.startActivity(intent)
         }
 
         // chiede conferma prima di eliminare

@@ -2,7 +2,7 @@
 // FILE: LezioneDao.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
 // SCOPO: Operazioni sul database per le lezioni.
-//        Aggiunto ordinamento per ora.
+//        Aggiunto getById e aggiorna per la modifica.
 // LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query)
 // ============================================================
 
@@ -12,6 +12,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface LezioneDao {
@@ -20,7 +21,10 @@ interface LezioneDao {
     suspend fun inserisci(lezione: Lezione)
 
     @Insert
-    suspend fun inserisciTutte(lezioni: List<Lezione>)  // inserisce lista intera — utile per import PDF
+    suspend fun inserisciTutte(lezioni: List<Lezione>)
+
+    @Update
+    suspend fun aggiorna(lezione: Lezione)  // aggiorna una lezione esistente
 
     @Delete
     suspend fun elimina(lezione: Lezione)
@@ -28,9 +32,11 @@ interface LezioneDao {
     @Query("SELECT * FROM lezioni ORDER BY giorno ASC, ora ASC")
     suspend fun getTutte(): List<Lezione>
 
-    // lezioni di un giorno specifico ordinate per ora crescente
     @Query("SELECT * FROM lezioni WHERE giorno = :giorno ORDER BY ora ASC")
     suspend fun getPerGiorno(giorno: String): List<Lezione>
+
+    @Query("SELECT * FROM lezioni WHERE id = :id")
+    suspend fun getById(id: Int): Lezione?  // cerca una lezione per id — usato per la modifica
 
     @Query("SELECT * FROM lezioni ORDER BY ora ASC LIMIT 1")
     suspend fun getProssima(): Lezione?

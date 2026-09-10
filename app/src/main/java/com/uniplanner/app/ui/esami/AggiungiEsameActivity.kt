@@ -1,10 +1,20 @@
+// ============================================================
+// FILE: AggiungiEsameActivity.kt
+// POSIZIONE: app/src/main/java/com/uniplanner/app/ui/esami/
+// SCOPO: Form per aggiungere O modificare un esame.
+//        Se riceve un ID via Intent, carica l'esame esistente
+//        e permette di modificarlo. Altrimenti aggiunge uno nuovo.
+// LEZIONE DI RIFERIMENTO: L09 (Activity), L10 (UI), L11 (Intent), L15 (Room)
+// ============================================================
+
 package com.uniplanner.app.ui.esami
 
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,216 +25,125 @@ import com.uniplanner.app.data.Esame
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class AggiungiEsameActivity : AppCompatActivity() {
 
-    private lateinit var tvTitoloFormEsame: TextView
-    private lateinit var etNomeEsame: EditText
-    private lateinit var etDataEsame: EditText
-    private lateinit var etCfuEsame: EditText
-    private lateinit var etVotoEsame: EditText
-    private lateinit var rbDaSostenere: RadioButton
-    private lateinit var rbSuperato: RadioButton
-    private lateinit var btnSalvaEsame: Button
-    private lateinit var btnEliminaEsame: Button
-    private lateinit var btnFrecciaIndietroEsame: Button
+    // data selezionata dall'utente tramite DatePicker
+    private var dataSelezionata = ""
 
-    private var esameId: Int = -1
+    // id dell'esame da modificare — -1 significa nuovo esame
+    private var esameId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aggiungi_esame)
 
-        tvTitoloFormEsame = findViewById(R.id.tvTitoloFormEsame)
-        etNomeEsame = findViewById(R.id.etNomeEsame)
-        etDataEsame = findViewById(R.id.etDataEsame)
-        etCfuEsame = findViewById(R.id.etCfuEsame)
-        etVotoEsame = findViewById(R.id.etVotoEsame)
-        rbDaSostenere = findViewById(R.id.rbDaSostenere)
-        rbSuperato = findViewById(R.id.rbSuperato)
-        btnSalvaEsame = findViewById(R.id.btnSalvaEsame)
-        btnEliminaEsame = findViewById(R.id.btnEliminaEsame)
-        btnFrecciaIndietroEsame = findViewById(R.id.btnFrecciaIndietroEsame)
+        val tvTitolo             = findViewById<TextView>(R.id.tvTitoloForm)
+        val etNome               = findViewById<EditText>(R.id.etNomeEsame)
+        val btnSelezionaData     = findViewById<Button>(R.id.btnSelezionaDataEsame)
+        val tvDataSelezionata    = findViewById<TextView>(R.id.tvDataSelezionataEsame)
+        val etCfu                = findViewById<EditText>(R.id.etCfuEsame)
+        val etVoto               = findViewById<EditText>(R.id.etVotoEsame)
+        val spinnerStato         = findViewById<Spinner>(R.id.spinnerStatoEsame)
+        val btnSalva             = findViewById<Button>(R.id.btnSalvaEsame)
+        val btnAnnulla           = findViewById<Button>(R.id.btnAnnullaEsame)
 
-        btnFrecciaIndietroEsame.setOnClickListener {
-            finish()
-        }
-
-        esameId = intent.getIntExtra("ESAME_ID", -1)
-
-        if (esameId != -1) {
-            tvTitoloFormEsame.text = "Modifica esame"
-
-            etNomeEsame.setText(intent.getStringExtra("ESAME_NOME") ?: "")
-            etDataEsame.setText(intent.getStringExtra("ESAME_DATA") ?: "")
-            etCfuEsame.setText(intent.getIntExtra("ESAME_CFU", 0).toString())
-            etVotoEsame.setText(intent.getIntExtra("ESAME_VOTO", 0).toString())
-
-            val stato = intent.getStringExtra("ESAME_STATO") ?: "da sostenere"
-
-            if (stato == "superato") {
-                rbSuperato.isChecked = true
-            } else {
-                rbDaSostenere.isChecked = true
-            }
-
-            btnEliminaEsame.visibility = View.VISIBLE
-        } else {
-            tvTitoloFormEsame.text = "Aggiungi esame"
-            btnEliminaEsame.visibility = View.GONE
-        }
-
-        btnSalvaEsame.setOnClickListener {
-            salvaEsame()
-        }
-
-        btnEliminaEsame.setOnClickListener {
-            eliminaEsame()
-        }
-    }
-
-    private fun salvaEsame() {
-        val nome = etNomeEsame.text.toString().trim()
-        val data = etDataEsame.text.toString().trim()
-        val cfuString = etCfuEsame.text.toString().trim()
-        val votoString = etVotoEsame.text.toString().trim()
-
-        if (nome.isEmpty()) {
-            etNomeEsame.error = "Inserisci il nome"
-            return
-        }
-
-        if (data.isEmpty()) {
-            etDataEsame.error = "Inserisci la data"
-            return
-        }
-
-        val cfu = cfuString.toIntOrNull()
-
-        if (cfu == null || cfu <= 0) {
-            etCfuEsame.error = "CFU non validi"
-            return
-        }
-
-        val voto = votoString.toIntOrNull() ?: 0
-
-        if (voto < 0 || voto > 30) {
-            etVotoEsame.error = "Il voto deve essere tra 0 e 30"
-            return
-        }
-
-        val stato = if (rbSuperato.isChecked) {
-            "superato"
-        } else {
-            "da sostenere"
-        }
-
-        if (stato == "da sostenere" && voto >= 18) {
-            Toast.makeText(
-                this,
-                "Un esame con voto almeno 18 deve essere segnato come superato",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
-
-        if (stato == "superato" && voto < 18) {
-            Toast.makeText(
-                this,
-                "Un esame superato deve avere un voto almeno pari a 18",
-                Toast.LENGTH_SHORT
-            ).show()
-            return
-        }
-
-        val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
-
-        val corso = prefs.getString("corso", "") ?: ""
-        val anno = prefs.getString("anno", "") ?: ""
-        val semestre = prefs.getString("semestre", "") ?: ""
-
-        val esame = Esame(
-            id = if (esameId == -1) 0 else esameId,
-            nome = nome,
-            data = data,
-            cfu = cfu,
-            voto = voto,
-            stato = stato,
-            corso = corso,
-            anno = anno,
-            semestre = semestre
+        // popola lo spinner con gli stati possibili
+        val stati = listOf("da sostenere", "superato")
+        spinnerStato.adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            stati
         )
 
-        lifecycleScope.launch {
-            val db = AppDatabase.getInstance(this@AggiungiEsameActivity)
-
-            withContext(Dispatchers.IO) {
-                if (esameId == -1) {
-                    db.esameDao().inserisci(esame)
-                } else {
-                    db.esameDao().aggiorna(esame)
+        // controlla se stiamo modificando un esame esistente
+        esameId = intent.getIntExtra("ESAME_ID", -1)
+        if (esameId != -1) {
+            // modalità modifica — carica i dati dell'esame esistente
+            tvTitolo.text = "Modifica esame"
+            lifecycleScope.launch {
+                val esame = withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(applicationContext).esameDao().getById(esameId)
+                }
+                esame?.let {
+                    etNome.setText(it.nome)
+                    etCfu.setText(it.cfu.toString())
+                    etVoto.setText(if (it.voto > 0) it.voto.toString() else "")
+                    dataSelezionata = it.data
+                    tvDataSelezionata.text = it.data
+                    // seleziona lo stato nello spinner
+                    val index = stati.indexOf(it.stato)
+                    if (index >= 0) spinnerStato.setSelection(index)
                 }
             }
+        }
 
-            Toast.makeText(
-                this@AggiungiEsameActivity,
-                "Esame salvato",
-                Toast.LENGTH_SHORT
+        // DatePicker per la data
+        btnSelezionaData.setOnClickListener {
+            val cal = Calendar.getInstance()
+            DatePickerDialog(
+                this,
+                { _, anno, mese, giorno ->
+                    dataSelezionata = "$giorno/${mese + 1}/$anno"
+                    tvDataSelezionata.text = dataSelezionata
+                },
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
             ).show()
+        }
 
+        btnAnnulla.setOnClickListener {
             finish()
         }
-    }
 
-    private fun eliminaEsame() {
-        if (esameId == -1) {
-            finish()
-            return
-        }
+        btnSalva.setOnClickListener {
+            val nome  = etNome.text.toString().trim()
+            val cfu   = etCfu.text.toString().trim()
+            val voto  = etVoto.text.toString().trim()
+            val stato = spinnerStato.selectedItem.toString()
 
-        val nome = etNomeEsame.text.toString().trim()
-        val data = etDataEsame.text.toString().trim()
-        val cfu = etCfuEsame.text.toString().trim().toIntOrNull() ?: 0
-        val voto = etVotoEsame.text.toString().trim().toIntOrNull() ?: 0
-
-        val stato = if (rbSuperato.isChecked) {
-            "superato"
-        } else {
-            "da sostenere"
-        }
-
-        val prefs = getSharedPreferences("uniplanner_prefs", MODE_PRIVATE)
-
-        val corso = prefs.getString("corso", "") ?: ""
-        val anno = prefs.getString("anno", "") ?: ""
-        val semestre = prefs.getString("semestre", "") ?: ""
-
-        val esame = Esame(
-            id = esameId,
-            nome = nome,
-            data = data,
-            cfu = cfu,
-            voto = voto,
-            stato = stato,
-            corso = corso,
-            anno = anno,
-            semestre = semestre
-        )
-
-        lifecycleScope.launch {
-            val db = AppDatabase.getInstance(this@AggiungiEsameActivity)
-
-            withContext(Dispatchers.IO) {
-                db.esameDao().elimina(esame)
+            if (nome.isEmpty() || cfu.isEmpty()) {
+                Toast.makeText(this, "Compila nome e CFU!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            Toast.makeText(
-                this@AggiungiEsameActivity,
-                "Esame eliminato",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val db = AppDatabase.getInstance(applicationContext)
+                    if (esameId == -1) {
+                        // inserisce nuovo esame
+                        db.esameDao().inserisci(
+                            Esame(
+                                nome  = nome,
+                                data  = dataSelezionata,
+                                cfu   = cfu.toIntOrNull() ?: 0,
+                                voto  = voto.toIntOrNull() ?: 0,
+                                stato = stato
+                            )
+                        )
+                    } else {
+                        // aggiorna esame esistente
+                        db.esameDao().aggiorna(
+                            Esame(
+                                id    = esameId,
+                                nome  = nome,
+                                data  = dataSelezionata,
+                                cfu   = cfu.toIntOrNull() ?: 0,
+                                voto  = voto.toIntOrNull() ?: 0,
+                                stato = stato
+                            )
+                        )
+                    }
+                }
+                Toast.makeText(
+                    this@AggiungiEsameActivity,
+                    if (esameId == -1) "Esame salvato!" else "Esame modificato!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
         }
     }
 }

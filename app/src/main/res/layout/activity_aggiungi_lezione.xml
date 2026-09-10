@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- ============================================================
      FILE: activity_aggiungi_lezione.xml
      POSIZIONE: app/src/main/res/layout/
-     SCOPO: Form per aggiungere una nuova lezione.
-            Campi: materia, giorno, ora, aula.
+     SCOPO: Form per aggiungere o modificare una lezione.
      LEZIONE DI RIFERIMENTO: L10 (Layouts & UI)
      ============================================================ -->
 
@@ -19,8 +17,9 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- titolo pagina -->
+        <!-- titolo dinamico: "Aggiungi lezione" o "Modifica lezione" -->
         <TextView
+            android:id="@+id/tvTitoloFormLezione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aggiungi lezione"
@@ -29,7 +28,6 @@
             android:textColor="@color/parthenope_blue"
             android:layout_marginBottom="24dp" />
 
-        <!-- campo materia -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +47,6 @@
             android:background="@color/white"
             android:layout_marginBottom="20dp" />
 
-        <!-- giorno della settimana -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +64,33 @@
             android:padding="12dp"
             android:layout_marginBottom="20dp" />
 
-        <!-- ora lezione -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data lezione"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <Button
+            android:id="@+id/btnSelezionaData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleziona data"
+            android:textColor="@color/parthenope_blue"
+            android:backgroundTint="@color/white"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvDataSelezionata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nessuna data selezionata"
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="20dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +110,6 @@
             android:background="@color/white"
             android:layout_marginBottom="20dp" />
 
-        <!-- aula -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,7 +129,6 @@
             android:background="@color/white"
             android:layout_marginBottom="32dp" />
 
-        <!-- bottone salva -->
         <Button
             android:id="@+id/btnSalvaLezione"
             android:layout_width="match_parent"
@@ -119,7 +140,6 @@
             android:backgroundTint="@color/parthenope_blue"
             android:layout_marginBottom="12dp" />
 
-        <!-- bottone annulla -->
         <Button
             android:id="@+id/btnAnnullaLezione"
             android:layout_width="match_parent"

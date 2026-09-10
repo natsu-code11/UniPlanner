@@ -1,13 +1,15 @@
 // ============================================================
 // FILE: EsamiAdapter.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/esami/
-// SCOPO: Adapter esami con conferma eliminazione e colori stato.
+// SCOPO: Adapter esami con conferma eliminazione e modifica.
+//        Toccare una riga apre il form di modifica.
 // LEZIONE DI RIFERIMENTO: L13 (RecyclerView, Adapter, ViewHolder)
 // ============================================================
 
 package com.uniplanner.app.ui.esami
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -46,13 +48,20 @@ class EsamiAdapter(
         holder.tvVoto.text  = if (esame.voto > 0) "Voto: ${esame.voto}" else "Voto: --"
         holder.tvStato.text = esame.stato
 
-        // colora la riga e lo stato in base al risultato
+        // colora la riga in base allo stato
         if (esame.stato == "superato") {
-            holder.tvStato.setTextColor(Color.parseColor("#2E7D32"))  // verde
-            holder.itemView.setBackgroundColor(Color.parseColor("#F1F8E9"))  // verde chiaro
+            holder.tvStato.setTextColor(Color.parseColor("#2E7D32"))
+            holder.itemView.setBackgroundColor(Color.parseColor("#F1F8E9"))
         } else {
-            holder.tvStato.setTextColor(Color.parseColor("#C62828"))  // rosso
-            holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))  // rosso chiaro
+            holder.tvStato.setTextColor(Color.parseColor("#C62828"))
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))
+        }
+
+        // toccare la riga apre il form di modifica
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, AggiungiEsameActivity::class.java)
+            intent.putExtra("ESAME_ID", esame.id)  // passa l'id dell'esame da modificare
+            holder.itemView.context.startActivity(intent)
         }
 
         // chiede conferma prima di eliminare
