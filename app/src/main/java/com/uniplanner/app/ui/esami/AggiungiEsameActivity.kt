@@ -1,9 +1,7 @@
 // ============================================================
 // FILE: AggiungiEsameActivity.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/esami/
-// SCOPO: Form per aggiungere O modificare un esame.
-//        Se riceve un ID via Intent, carica l'esame esistente
-//        e permette di modificarlo. Altrimenti aggiunge uno nuovo.
+// SCOPO: Form per aggiungere O modificare un esame e o modificarlo
 // LEZIONE DI RIFERIMENTO: L09 (Activity), L10 (UI), L11 (Intent), L15 (Room)
 // ============================================================
 

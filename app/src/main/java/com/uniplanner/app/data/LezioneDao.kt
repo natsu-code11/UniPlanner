@@ -1,10 +1,5 @@
-// ============================================================
 // FILE: LezioneDao.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
-// SCOPO: Operazioni sul database per le lezioni.
-//        Aggiunto getById e aggiorna per la modifica.
-// LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query)
-// ============================================================
 
 package com.uniplanner.app.data
 

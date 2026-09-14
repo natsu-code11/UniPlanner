@@ -1,9 +1,5 @@
 // FILE: EsameDao.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
-// SCOPO: Definisce le operazioni sul database per la tabella "esami".
-//        Room genera automaticamente il codice SQL da queste funzioni.
-//        "suspend" significa che vanno chiamate dentro una coroutine.
-// LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query, @Insert, @Update, @Delete)
 
 package com.uniplanner.app.data
 

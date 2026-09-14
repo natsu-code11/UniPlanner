@@ -1,9 +1,6 @@
 // FILE: Scadenza.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
-// SCOPO: Definisce la struttura della tabella "scadenze" nel database.
-//        Contiene progetti, pagamenti, consegne e attività di studio
-//        con priorità e stato di completamento.
-// LEZIONE DI RIFERIMENTO: L05 (data class), L15 (Room - @Entity)
+
 
 package com.uniplanner.app.data  // cartella logica del file
 

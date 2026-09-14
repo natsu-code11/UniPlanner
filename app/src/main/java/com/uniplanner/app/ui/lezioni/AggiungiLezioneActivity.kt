@@ -2,7 +2,6 @@
 // FILE: AggiungiLezioneActivity.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/lezioni/
 // SCOPO: Form per aggiungere O modificare una lezione.
-//        Se riceve un ID via Intent carica la lezione esistente.
 // LEZIONE DI RIFERIMENTO: L09 (Activity), L10 (UI), L11 (Intent), L15 (Room)
 // ============================================================
 

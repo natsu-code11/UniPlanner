@@ -1,8 +1,7 @@
 // ============================================================
 // FILE: LezioneAdapter.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/ui/lezioni/
-// SCOPO: Adapter lezioni con conferma eliminazione e modifica.
-//        Toccare una riga apre il form di modifica.
+// SCOPO: collega la lista delle lezioni alla recyclerview.
 // LEZIONE DI RIFERIMENTO: L13 (RecyclerView, Adapter, ViewHolder)
 // ============================================================
 
@@ -19,11 +18,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniplanner.app.R
 import com.uniplanner.app.data.Lezione
 
+// l'adapter riceve la lista e una funzione da chiamare quando si elimina una lezione
 class LezioneAdapter(
     private var lista: List<Lezione>,
     private val onElimina: (Lezione) -> Unit
 ) : RecyclerView.Adapter<LezioneAdapter.LezioneViewHolder>() {
 
+    // teniamo i riferimenti ai widget della riga per non cercarli ogni volta
     inner class LezioneViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvMateria  = itemView.findViewById<TextView>(R.id.tvMateria)
         val tvAula     = itemView.findViewById<TextView>(R.id.tvAula)
@@ -32,19 +33,21 @@ class LezioneAdapter(
         val btnElimina = itemView.findViewById<Button>(R.id.btnElimina)
     }
 
+    // crea una nuova riga partendo dal layout xml item_lezione
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LezioneViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_lezione, parent, false)
         return LezioneViewHolder(view)
     }
 
+    // riempie ogni riga con i dati della lezione corrispondente
     override fun onBindViewHolder(holder: LezioneViewHolder, position: Int) {
         val lezione = lista[position]
         holder.tvMateria.text = lezione.materia
         holder.tvAula.text    = "Aula: ${lezione.aula}"
         holder.tvOra.text     = lezione.ora
 
-        // mostra la data se presente
+        // la data è opzionale — la mostriamo solo se è stata inserita
         if (lezione.data.isNotEmpty()) {
             holder.tvData.text       = lezione.data
             holder.tvData.visibility = View.VISIBLE
@@ -52,14 +55,14 @@ class LezioneAdapter(
             holder.tvData.visibility = View.GONE
         }
 
-        // toccare la riga apre il form di modifica
+        // toccando la riga apriamo il form di modifica con l'id della lezione
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, AggiungiLezioneActivity::class.java)
-            intent.putExtra("LEZIONE_ID", lezione.id)  // passa l'id della lezione
+            intent.putExtra("LEZIONE_ID", lezione.id)
             holder.itemView.context.startActivity(intent)
         }
 
-        // chiede conferma prima di eliminare
+        // prima di eliminare chiediamo conferma per evitare errori accidentali
         holder.btnElimina.setOnClickListener {
             AlertDialog.Builder(holder.itemView.context)
                 .setTitle("Elimina lezione")
@@ -70,8 +73,10 @@ class LezioneAdapter(
         }
     }
 
+    // numero totale di righe nella lista
     override fun getItemCount() = lista.size
 
+    // sostituiamo la lista e ridisegniamo la recyclerview
     fun aggiorna(nuovaLista: List<Lezione>) {
         lista = nuovaLista
         notifyDataSetChanged()

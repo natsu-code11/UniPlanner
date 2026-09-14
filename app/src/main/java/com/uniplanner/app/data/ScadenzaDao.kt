@@ -1,9 +1,6 @@
 // FILE: ScadenzaDao.kt
 // POSIZIONE: app/src/main/java/com/uniplanner/app/data/
-// SCOPO: Definisce le operazioni sul database per la tabella "scadenze".
-//        Permette di aggiungere, modificare, eliminare e leggere
-//        le scadenze ordinate per data e filtrate per stato.
-// LEZIONE DI RIFERIMENTO: L15 (Room - @Dao, @Query, @Insert, @Update, @Delete)
+
 package com.uniplanner.app.data
 
 import androidx.room.Dao         // marca questa interfaccia come DAO
