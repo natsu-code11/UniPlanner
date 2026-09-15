@@ -35,7 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val nome  = prefs.getString("nome", "") ?: ""
 
         if (nome.isNotEmpty()) {
-            view.findViewById<TextView>(R.id.tvSaluto).text = "Ciao, $nome! 👋"
+            view.findViewById<TextView>(R.id.tvSaluto).text = "Ciao, $nome!"
         }
 
         // bottone Lezioni
@@ -96,7 +96,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             val tvProssima = view.findViewById<TextView>(R.id.tvProssimaScadenza)
             if (prossima != null) {
-                tvProssima.text       = "⏰ Prossima scadenza: ${prossima.titolo} entro ${prossima.data}"
+                tvProssima.text       = "Prossima scadenza: ${prossima.titolo} entro ${prossima.data}"
                 tvProssima.visibility = View.VISIBLE
             } else {
                 tvProssima.visibility = View.GONE
