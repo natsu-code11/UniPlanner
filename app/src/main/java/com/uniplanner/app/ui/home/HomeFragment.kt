@@ -35,7 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val nome  = prefs.getString("nome", "") ?: ""
 
         if (nome.isNotEmpty()) {
-            view.findViewById<TextView>(R.id.tvSaluto).text = "Ciao, $nome!"
+            view.findViewById<TextView>(R.id.tvSaluto).text = "Ciao, $nome! "
         }
 
         // bottone Lezioni
